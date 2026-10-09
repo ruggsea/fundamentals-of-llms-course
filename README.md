@@ -2,7 +2,7 @@
 
 Winter semester 2026/27 · Uni Graz · [Course registration](https://online.uni-graz.at/kfu_online/wbLv.wbShowLVDetail?pStpSpNr=1005778&pSpracheNr=1) · [Course page](https://cs2.uni-graz.at/teaching/fundamentals-of-llms/)
 
-Slides: https://ruggsea.github.io/fundamentals-of-llms-course/ · Reference code: [`code/`](code/)
+Slides: https://ruggsea.github.io/fundamentals-of-llms-course/
 
 ## Overview
 
@@ -116,4 +116,4 @@ You will get access to the GSC cluster for the course. Access instructions and t
 
 ## Reference code
 
-[`code/`](code/): a small GPT from tokenizer to DPO, runs on a laptop CPU. Setup and usage in [`code/README.md`](code/README.md).
+Code and setup instructions will be added here.

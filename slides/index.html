@@ -36,7 +36,7 @@
           decks.map(d => d.available === false
             ? `<li class="soon"><span class="date">${d.date}</span> <span class="title"><b>${d.title}.</b> ${d.promise} <em>Slides follow after the session.</em></span></li>`
             : `<li><a href="?deck=${d.file.startsWith('lectures/') ? d.file : 'lectures/' + d.file}"><span class="date">${d.date}</span> <span class="title"><b>${d.title}.</b> ${d.promise}</span></a></li>`).join('') +
-          `</ol><p class="sub"><a href="https://github.com/ruggsea/fundamentals-of-llms-course">Course repository</a> · <a href="https://github.com/ruggsea/fundamentals-of-llms-course/tree/main/code">Reference code</a></p></main>`;
+          `</ol><p class="sub"><a href="https://github.com/ruggsea/fundamentals-of-llms-course">Course repository</a></p></main>`;
       });
       throw new Error('index page');   // stop the slideshow setup below
     }
