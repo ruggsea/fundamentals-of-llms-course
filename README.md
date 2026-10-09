@@ -1,10 +1,8 @@
-# Advanced Machine Learning: Fundamentals of LLMs
+# Fundamentals of LLMs
 
-Uni Graz, winter semester 2026/27. A course from Jana Lasser's (CS)² lab at the IDea_Lab, taught by Ruggero Marino Lazzaroni with student assistant Lorenz Prattes.
+Winter semester 2026/27 · Uni Graz · [Course registration](https://online.uni-graz.at/kfu_online/wbLv.wbShowLVDetail?pStpSpNr=1005778&pSpracheNr=1) · [Course page](https://cs2.uni-graz.at/teaching/fundamentals-of-llms/)
 
-This repository is where the course lives during the semester: the slides, the schedule, the reading list for each week and the reference code. The rules of the course are on the [course page](https://cs2.uni-graz.at/teaching/fundamentals-of-llms/), and the binding version of the assessment rules is the course description in [UNIGRAZonline](https://online.uni-graz.at/kfu_online/wbLv.wbShowLVDetail?pStpSpNr=1005778&pSpracheNr=1). If this page and UNIGRAZonline disagree, UNIGRAZonline applies.
-
-**Slides: [ruggsea.github.io/fundamentals-of-llms-course](https://ruggsea.github.io/fundamentals-of-llms-course/)**. Arrows move, O shows the grid, S opens the speaker notes, F is fullscreen. Code blocks with a Run button run Python in the browser.
+Slides: https://ruggsea.github.io/fundamentals-of-llms-course/ · Reference code: [`code/`](code/)
 
 ## Overview
 
@@ -12,18 +10,16 @@ Build, train and evaluate a language model, from n-grams to transformers. The co
 
 You need solid Python: functions, classes, file I/O and debugging. Prior machine learning or NLP experience helps but is not required; allow extra time in the first two weeks if these are new to you.
 
-An elective for the Data Science and Mathematics master's programmes. Course number DAT.C3111UB, 3 ECTS, taught in English.
+An elective for the Data Science and Mathematics master's programmes.
 
 | | |
 |---|---|
 | When | Thursdays, 15:15–17:00 |
-| Where | SR 127.11, IDea_Lab, Leechgasse 34, first floor |
-| First session | Thursday 8 October 2026 |
-| Last session | Thursday 28 January 2027 |
+| Where | SR 127.11 · IDea_Lab, Leechgasse 34 |
 
 ## Schedule
 
-Slides and reading lists are added here after each session. Topics can move; the Thursdays stay.
+Slides and reading lists will be added as we work through them.
 
 | # | date | topic | slides |
 |---|---|---|---|
@@ -45,7 +41,7 @@ Slides and reading lists are added here after each session. Topics can move; the
 | 15 | 28 Jan | Project feedback. Last session. | after the session |
 | | 3–5 Feb | Assignment 2 defences, bookable slots | |
 
-## Read this before next Thursday
+## Reading
 
 **01 · The guessing game** (08 Oct)
 
@@ -57,9 +53,9 @@ Slides and reading lists are added here after each session. Topics can move; the
 
 ## Contact
 
-For general questions about the course, ask Lorenz. If you have specific requests, you can also contact Ruggero (ruggero.lazzaroni@uni-graz.at). When in doubt, write to both. Addresses are on the [course page](https://cs2.uni-graz.at/teaching/fundamentals-of-llms/).
+For general questions about the course, ask Lorenz. If you have specific requests, you can also contact Ruggero. Addresses are on the [course page](https://cs2.uni-graz.at/teaching/fundamentals-of-llms/).
 
-The course communication channel is announced in the first session and by email. For illness or other circumstances affecting a deadline or defence, contact us promptly and provide the relevant documentation.
+The course communication channel will be sent out via email. For illness or other circumstances affecting a deadline or defence, contact us promptly and provide the relevant documentation.
 
 ## Assessment
 
@@ -69,7 +65,7 @@ Two individual assignments, each followed by a defence. Active attendance is req
 |---|---|---|
 | Assignment 1 | 30% | Wednesday 9 December 2026, 23:59 |
 | A1 defence | 10% | 16–18 December 2026 |
-| Assignment 2 | 40% | Monday 15 February 2027, 23:59 (proposed) |
+| Assignment 2 | 40% | Monday 15 February 2027, 23:59 — proposed |
 | A2 defence | 20% | 3–5 February 2027 |
 
 ### Grading scheme
@@ -96,15 +92,19 @@ Briefly document which tools you used and for what.
 
 ## Assignments
 
-**A1 · Train a small GPT.** Train and evaluate a small language model. Released on 5 November; details will be added here then.
+### A1 · Train a small GPT
 
-**A2 · Post-train and evaluate.** Post-train a model and compare it with the unchanged base model. Details will be added here later in the semester.
+Train and evaluate a small language model. Details will be added here shortly.
+
+### A2 · Post-train and evaluate
+
+Post-train a model and compare it with the unchanged base model. Details will be added here shortly.
 
 ## Defences
 
 Each assignment has an individual defence. You should be able to explain your work and results.
 
-Slots will be available for booking within the time windows above. Booking and preparation details will follow.
+Slots will be available for booking within the specified time windows. Booking and preparation details will follow.
 
 ## Compute
 
@@ -112,8 +112,4 @@ You will get access to the GSC cluster for the course. Access instructions and t
 
 ## Reference code
 
-[`code/`](code/) is the whole course in eight short Python files: a byte-level BPE tokenizer, a data loader, a small GPT, pretraining, evaluation, supervised fine-tuning and DPO. It runs on a laptop CPU in about four minutes. Start with [`code/README.md`](code/README.md).
-
-## Pictures
-
-The engravings on the cover and in the slides are public domain; sources and licences are listed in [`slides/assets/README.md`](slides/assets/README.md) and [`slides/stickers/README.md`](slides/stickers/README.md).
+[`code/`](code/): a small GPT from tokenizer to DPO, runs on a laptop CPU. Setup and usage in [`code/README.md`](code/README.md).
