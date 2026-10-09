@@ -170,10 +170,10 @@ body:has(.deck-index) { background: var(--r-background-color); margin: 0; }
 .deck-index ol { list-style: none; padding: 0; margin: 0; counter-reset: deck; }
 .deck-index li { counter-increment: deck; border-top: 1px solid var(--rule); }
 .deck-index li:last-child { border-bottom: 1px solid var(--rule); }
-.deck-index a { display: grid; grid-template-columns: 2.2em 5.5em 1fr; gap: 12px; padding: 12px 4px; text-decoration: none; color: var(--r-main-color); border: 0; font-size: 19px; line-height: 1.35; }
-.deck-index a::before { content: counter(deck, decimal-leading-zero); font-family: var(--small-font); color: var(--r-link-color); }
+.deck-index li a { display: grid; grid-template-columns: 2.2em 5.5em 1fr; gap: 12px; padding: 12px 4px; text-decoration: none; color: var(--r-main-color); border: 0; font-size: 19px; line-height: 1.35; }
+.deck-index li a::before { content: counter(deck, decimal-leading-zero); font-family: var(--small-font); color: var(--r-link-color); }
 .deck-index .date { font-family: var(--small-font); color: var(--grey); font-size: 15px; padding-top: 3px; }
-.deck-index a:hover { background: #eae2cc; }
+.deck-index li a:hover { background: #eae2cc; }
 .deck-index .sub a { color: var(--r-link-color); }
 
 /* stickers: public-domain engraving cutouts (slides/stickers/), ink on cream, one per slide at most.
