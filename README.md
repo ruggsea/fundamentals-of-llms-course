@@ -57,7 +57,7 @@ Additional resources and reading material will be posted in the Discord.
 
 ## Contact
 
-For general questions about the course, ask Lorenz. If you have specific requests, you can also contact Ruggero. Addresses are on the [course page](https://cs2.uni-graz.at/teaching/fundamentals-of-llms/).
+For general questions about the course, ask Lorenz (lorenz.prattes@uni-graz.at). If you have specific requests, you can also contact Ruggero (ruggero.lazzaroni@uni-graz.at).
 
 The course communication channel will be sent out via email. For illness or other circumstances affecting a deadline or defence, contact us promptly and provide the relevant documentation.
 
