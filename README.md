@@ -41,7 +41,9 @@ Slides and reading lists will be added as we work through them.
 | 15 | 28 Jan | Project feedback. Last session. | after the session |
 | | 3–5 Feb | Assignment 2 defences, bookable slots | |
 
-## Reading
+## Reading material
+
+The reading material from the slides, per lecture.
 
 **01 · The guessing game** (08 Oct)
 
@@ -50,6 +52,8 @@ Slides and reading lists will be added as we work through them.
 - Ben Hoyt, [Markov chain in 20 lines of Python](https://benhoyt.com/writings/markov-chain/). Run it on a book you like.
 - Cameron Wolfe, [Language Model Training and Inference: From Concept to Code](https://cameronrwolfe.substack.com/p/language-model-training-and-inference).
 - Stanford CS336, [lecture 1](https://github.com/stanford-cs336/lectures/blob/main/lecture_01.py), first half.
+
+Additional resources and reading material will be posted in the Discord.
 
 ## Contact
 
