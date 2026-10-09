@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Fundamentals of LLMs</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/reset.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/reveal.css">
+  <link rel="stylesheet" id="theme-css" href="theme/llm-course.css">
+  <script>document.getElementById("theme-css").href = "theme/llm-course.css?t=" + Date.now();</script>  <!-- never serve a cached theme while editing -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16/dist/contrib/auto-render.min.js"></script>
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+      <!-- one markdown file = one deck; open index.html?deck=lectures/NN-name.md (see README) -->
+      <section data-markdown data-separator="^\n---\n" data-separator-vertical="^\n\|\|\|\n" data-separator-notes="^Note:"><textarea data-template id="deck-src"></textarea></section>
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/reveal.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5/plugin/markdown/markdown.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5/plugin/highlight/highlight.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5/plugin/notes/notes.js"></script>
+  <script>
+    // ?deck=lectures/01-guessing-game.md picks the markdown file; the index page lists the decks.
+    // We fetch the file ourselves so that math can be hidden from the markdown parser (which eats
+    // backslashes and underscores inside $...$) and typeset afterwards with KaTeX auto-render.
+    const deck = new URLSearchParams(location.search).get('deck');
+    if (!deck) {   // no deck chosen: show the index of decks instead of a slideshow
+      document.querySelector('.reveal').remove();
+      fetch('decks.json').then(r => r.json()).then(decks => {
+        document.body.innerHTML = `<main class="deck-index"><p class="kicker">Advanced Machine Learning · Uni Graz · Winter 2026/27</p>
+          <h1>Fundamentals of LLMs</h1><p class="sub">Lecture decks. Arrows move, O shows the grid, S opens the notes, F is fullscreen. Course page: <a href="https://cs2.uni-graz.at/teaching/fundamentals-of-llms/">cs2.uni-graz.at/teaching/fundamentals-of-llms</a>.</p><ol>` +
+          decks.map(d => d.available === false
+            ? `<li class="soon"><span class="date">${d.date}</span> <span class="title"><b>${d.title}.</b> ${d.promise} <em>Slides follow after the session.</em></span></li>`
+            : `<li><a href="?deck=${d.file.startsWith('lectures/') ? d.file : 'lectures/' + d.file}"><span class="date">${d.date}</span> <span class="title"><b>${d.title}.</b> ${d.promise}</span></a></li>`).join('') +
+          `</ol><p class="sub"><a href="https://github.com/ruggsea/fundamentals-of-llms-course">Course repository</a> · <a href="https://github.com/ruggsea/fundamentals-of-llms-course/tree/main/code">Reference code</a></p></main>`;
+      });
+      throw new Error('index page');   // stop the slideshow setup below
+    }
+    document.title = deck.split('/').pop().replace('.md', '');
+    const maths = [];
+    function protectMath(src) {
+      // leave fenced code alone; elsewhere swap $$...$$ and $...$ for placeholders
+      return src.split(/(```[\s\S]*?```)/g).map((chunk, i) => i % 2 ? chunk :
+        chunk.replace(/\$\$[\s\S]*?\$\$|\$(?=\S)(?:\\.|[^$\n])*?(?<=\S)\$/g, m => { maths.push(m); return `MATHPH${maths.length - 1}X`; })
+      ).join('');
+    }
+    function restoreMath(root) {
+      const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+      const nodes = []; while (walker.nextNode()) nodes.push(walker.currentNode);
+      for (const n of nodes) if (/MATHPH\d+X/.test(n.nodeValue)) n.nodeValue = n.nodeValue.replace(/MATHPH(\d+)X/g, (_, i) => maths[+i]);
+    }
+    fetch(deck).then(r => r.text()).then(src => {
+      document.getElementById('deck-src').textContent = protectMath(src);
+      Reveal.initialize({
+      width: 1600, height: 900, margin: 0.04,
+      hash: true, slideNumber: 'c/t', progress: true, controls: false, transition: 'none', backgroundTransition: 'none',
+      autoAnimateDuration: 0.6, autoAnimateEasing: 'ease-in-out',
+      plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+    }).then(() => {
+      const root = document.querySelector('.reveal .slides');
+      restoreMath(root);
+      renderMathInElement(root, { delimiters: [ { left: '$$', right: '$$', display: true }, { left: '$', right: '$', display: false } ], throwOnError: false });
+      setupRunBlocks();
+      setupGuessGame();
+      setupClickAdvance();
+    });
+    });
+
+    // ---- runnable Python: a ```python run ... ``` block gets a Run button; output appears below.
+    // Pyodide (Python in WebAssembly, with numpy) loads from the CDN on the first click, ~10 s once.
+    let pyodideReady = null;
+    function loadPyodide_() {
+      if (pyodideReady) return pyodideReady;
+      pyodideReady = new Promise((resolve, reject) => {
+        const s = document.createElement('script');
+        s.src = 'https://cdn.jsdelivr.net/pyodide/v0.27.7/full/pyodide.js';
+        s.onload = () => loadPyodide({ indexURL: 'https://cdn.jsdelivr.net/pyodide/v0.27.7/full/' })
+          .then(async py => { await py.loadPackage('numpy'); resolve(py); }).catch(reject);
+        s.onerror = reject; document.head.appendChild(s);
+      });
+      return pyodideReady;
+    }
+    async function runBlock(pre) {
+      const code = pre.dataset.source; const out = pre.parentElement.querySelector('pre.output');
+      out.textContent = 'loading Python…'; out.classList.add('visible');
+      try {
+        const py = await loadPyodide_();
+        py.setStdout({ batched: t => { out.textContent += t + '\n'; } });
+        out.textContent = '';
+        await py.runPythonAsync(code);
+        if (!out.textContent) out.textContent = '(no output)';
+      } catch (e) { out.textContent = String(e).split('\n').slice(-3).join('\n'); }
+    }
+    function setupRunBlocks() {
+      const blocks = document.querySelectorAll('pre > code.language-python.run, pre > code[class*="run"]');
+      if (blocks.length) {   // keep Python warm: load Pyodide now, not on the first click
+        const badge = document.createElement('div'); badge.className = 'py-badge'; badge.textContent = 'python: loading…';
+        document.body.appendChild(badge);
+        setTimeout(() => loadPyodide_().then(py => { py.runPython('import numpy'); badge.textContent = 'python: ready'; badge.classList.add('ready'); setTimeout(() => badge.classList.add('fade'), 4000); })
+          .catch(() => { badge.textContent = 'python: failed to load'; badge.classList.add('failed'); }), 800);
+      }
+      blocks.forEach(code => {
+        const pre = code.parentElement;
+        pre.dataset.source = code.textContent;
+        const wrap = document.createElement('div'); wrap.className = 'run-wrap';
+        pre.parentNode.insertBefore(wrap, pre); wrap.appendChild(pre);
+        const btn = document.createElement('button'); btn.className = 'run-btn'; btn.textContent = 'run ▸';
+        btn.addEventListener('click', e => { e.preventDefault(); e.stopPropagation(); runBlock(pre); }, true);
+        btn.addEventListener('mousedown', e => e.stopPropagation(), true);
+        wrap.appendChild(btn);
+        const out = document.createElement('pre'); out.className = 'output'; wrap.appendChild(out);
+      });
+    }
+
+    // ---- guessing game (deck 01): the live Shannon game runs on the slide.
+    // Click a key or type: a wrong guess counts an attempt, the right letter commits and the
+    // cursor moves to the next position. The number under each letter is the attempts it took.
+    // Entropy averages log2 of the attempts, Shannon 1951 section 6 style.
+    const GG_DEFAULT = 'I WAS BENEVOLENT AND GOOD MISERY MADE ME A FIEND';
+    // ---- click anywhere on a slide advances it, except on interactive elements and the game slide.
+    function setupClickAdvance() {
+      document.addEventListener('click', e => {
+        if (e.defaultPrevented) return;
+        if (e.target.closest('a, button, input, .run-wrap, .source, .progress, #gg-board, #gg-keys, #gg-count, #gg-result, #gg-avg')) return;
+        if (Reveal.getCurrentSlide() && Reveal.getCurrentSlide().querySelector('#gg-board')) return;   // the game: arrows only
+        Reveal.next();
+      });
+    }
+
+    function setupGuessGame() {
+      Reveal.addEventListener('slidechanged', e => { if (e.currentSlide.querySelector('#gg-board')) buildGG(e.currentSlide); });
+      const now = document.querySelector('.reveal .slides section.present');
+      if (now && now.querySelector('#gg-board')) buildGG(now);
+    }
+    function buildGG(section) {
+      const board = section.querySelector('#gg-board');
+      if (!board || board.dataset.on) return;
+      board.dataset.on = '1';
+      const keys = section.querySelector('#gg-keys');
+      const countEl = section.querySelector('#gg-count');
+      const resultEl = section.querySelector('#gg-result');
+      const st = { target: '', pos: 0, counts: [], attempts: 0, done: false };
+      const addKey = (label, val) => {
+        const b = document.createElement('button');
+        b.className = 'gg-key'; b.textContent = label;
+        b.addEventListener('mousedown', e => e.stopPropagation(), true);
+        b.addEventListener('click', e => { e.preventDefault(); e.stopPropagation(); guess(val); }, true);
+        keys.appendChild(b);
+      };
+      'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('').forEach(L => addKey(L, L));
+      addKey('␣', ' ');
+      const avgEl = document.createElement('div'); avgEl.id = 'gg-avg'; keys.parentNode.insertBefore(avgEl, keys);
+      const mk = (t, fn) => { const b = document.createElement('button'); b.className = 'gg-key'; b.textContent = t;
+        b.addEventListener('mousedown', e => e.stopPropagation(), true);
+        b.addEventListener('click', e => { e.preventDefault(); e.stopPropagation(); fn(); }, true); keys.appendChild(b); };
+      mk('reset', reset); mk('undo', undo);
+      const cap = [...section.querySelectorAll('p.caption')].find(p => p.id !== 'gg-count' && p.id !== 'gg-result');
+      if (cap) {
+        const eb = document.createElement('button'); eb.className = 'gg-key special'; eb.textContent = 'entropy';
+        eb.addEventListener('mousedown', e => e.stopPropagation(), true);
+        eb.addEventListener('click', e => { e.preventDefault(); e.stopPropagation(); entropy(); }, true);
+        cap.insertAdjacentElement('afterend', eb);
+        eb.insertAdjacentElement('afterend', resultEl);
+      }
+      function reset() {
+        const custom = new URLSearchParams(location.search).get('gg');
+        st.target = (custom || GG_DEFAULT).toUpperCase().replace(/[^A-Z ]/g, '');
+        st.counts = []; st.attempts = 0;
+        if (!st.target.length) { st.pos = 0; st.done = true; }
+        else { st.pos = 1; st.counts = [1]; st.done = st.target.length < 2; }   // first letter is given
+        resultEl.textContent = '';
+        render();
+      }
+      function undo() { if (st.pos > 1) { st.pos--; st.attempts = st.counts.pop(); render(); } }
+      function guess(L) {
+        if (st.done || !st.target.length) return;
+        st.attempts++;
+        if (st.target[st.pos] === L) {
+          st.counts.push(st.attempts); st.attempts = 0; st.pos++;
+          if (st.pos >= st.target.length) st.done = true;
+        }
+        render();
+      }
+      function entropy() {
+        if (!st.counts.length) return;
+        const H = st.counts.reduce((a, k) => a + Math.log2(k), 0) / st.counts.length;
+        resultEl.textContent = 'H \u2248 ' + H.toFixed(2) + ' bits per letter \u00b7 perplexity ' + Math.pow(2, H).toFixed(1) + '.';
+      }
+      function render() {
+        board.innerHTML = '';
+        for (let i = 0; i < st.target.length; i++) {
+          const d = document.createElement('div'); d.className = 'gg-letter';
+          if (i < st.pos) {
+            d.innerHTML = '<span>' + (st.target[i] === ' ' ? '␣' : st.target[i]) + '</span><span class="n">' + st.counts[i] + '</span>';
+          } else if (i === st.pos && !st.done) {
+            d.innerHTML = '<span class="gg-cursor">&nbsp;</span>';
+          } else { d.innerHTML = '<span>&nbsp;</span>'; }
+          board.appendChild(d);
+        }
+        countEl.textContent = st.done ? 'done \u2014 entropy when you want it'
+          : (st.attempts ? st.attempts + (st.attempts > 1 ? ' attempts' : ' attempt') + ' so far on this letter'
+          : 'click or type a letter');
+        const avg = st.counts.length ? st.counts.reduce((a, b) => a + b, 0) / st.counts.length : 0;
+        avgEl.innerHTML = '<span class="n">' + avg.toFixed(1) + '</span> guesses per letter';
+      }
+      document.addEventListener('keydown', e => {
+        if (!section.classList.contains('present')) return;
+        if (e.key === 'Backspace') { e.preventDefault(); e.stopImmediatePropagation(); undo(); }
+        else if (e.key === ' ' || /^[a-zA-Z]$/.test(e.key)) { e.preventDefault(); e.stopImmediatePropagation(); guess(e.key === ' ' ? ' ' : e.key.toUpperCase()); }
+      }, true);
+      reset();
+      window.ggDebug = () => ({ target: st.target, pos: st.pos, counts: st.counts.slice(), attempts: st.attempts, done: st.done });
+    }
+  </script>
+</body>
+</html>

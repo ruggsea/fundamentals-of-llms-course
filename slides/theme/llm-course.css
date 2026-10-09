@@ -1,0 +1,201 @@
+/* Fundamentals of LLMs — reveal.js theme. Same palette and type as the course cover:
+   cream paper, ink text, one red accent, engravings as pictures. Works in reveal.js 5 and in
+   Obsidian Advanced Slides (which is reveal.js). */
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Jost:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap');
+
+:root {
+  --r-background-color: #f3ecd9;   /* cream */
+  --r-main-color: #26221e;         /* ink */
+  --r-heading-color: #26221e;
+  --r-link-color: #b02c20;         /* red */
+  --r-link-color-hover: #7d1f17;
+  --r-selection-background-color: #b02c20;
+  --r-selection-color: #f3ecd9;
+  --grey: #6e6860;
+  --rule: #b8b0a0;
+  --r-main-font: Baskerville, "Libre Baskerville", Georgia, serif;
+  --r-heading-font: Baskerville, "Libre Baskerville", Georgia, serif;
+  --r-code-font: "JetBrains Mono", Menlo, monospace;
+  --small-font: Futura, Jost, "Helvetica Neue", sans-serif;
+  --r-main-font-size: 34px;
+  --r-heading1-size: 2.2em;
+  --r-heading2-size: 1.5em;
+  --r-heading3-size: 1.1em;
+  --r-heading-font-weight: 400;
+  --r-heading-letter-spacing: -0.01em;
+  --r-heading-text-transform: none;
+  --r-heading-line-height: 1.05;
+  --r-block-margin: 0.6em;
+  --r-heading-margin: 0 0 0.5em 0;
+}
+
+.reveal-viewport { background: var(--r-background-color); }
+.reveal { font-family: var(--r-main-font); font-size: var(--r-main-font-size); color: var(--r-main-color); }
+.reveal .slides section { text-align: left; padding: 0.8em 1.4em; box-sizing: border-box; height: 100%; }
+.reveal .slides section:not(.title):not(.divider):not(.statement) { display: flex !important; flex-direction: column; justify-content: center; align-items: flex-start; }
+.reveal .slides section:not(.title):not(.divider):not(.statement) > * { width: 100%; }
+.reveal .slides section:not(.title):not(.divider):not(.statement) > h2:first-child, .reveal .slides section:not(.title):not(.divider):not(.statement) > .kicker + h2 { margin-bottom: 0.6em; }
+.reveal h1, .reveal h2, .reveal h3 { font-family: var(--r-heading-font); font-weight: 400; color: var(--r-heading-color); }
+.reveal h1 { font-size: var(--r-heading1-size); }
+.reveal h2 { font-size: var(--r-heading2-size); }
+.reveal h3 { font-size: var(--r-heading3-size); color: var(--grey); }
+.reveal p, .reveal li { line-height: 1.35; }
+.reveal ul, .reveal ol { display: block; margin-left: 1em; }
+.reveal li { margin: 0.25em 0; }
+.reveal li::marker { color: var(--r-link-color); }
+.reveal strong { font-weight: 700; }
+.reveal em { font-style: italic; }
+.reveal a { color: var(--r-link-color); text-decoration: none; border-bottom: 1px solid var(--rule); }
+.reveal hr { border: 0; border-top: 2px solid var(--r-main-color); margin: 0.6em 0; }
+.reveal blockquote { font-style: italic; border-left: 4px solid var(--r-link-color); padding-left: 0.6em; margin: 0.6em 0; background: none; box-shadow: none; width: 100%; }
+.reveal blockquote cite, .reveal .cite { display: block; font-family: var(--small-font); font-style: normal; font-size: 0.55em; color: var(--grey); margin-top: 0.4em; }
+
+/* small sans text: kicker above titles, captions, footers */
+.reveal .kicker { font-family: var(--small-font); font-size: 0.5em; color: var(--grey); letter-spacing: 0.02em; margin: 0 0 0.6em 0; }
+.reveal .caption, .reveal figcaption { font-family: var(--small-font); font-size: 0.45em; color: var(--grey); margin-top: 0.3em; }
+
+/* clickable source, bottom right of a slide (STYLE.md, slide grammar). Slides that carry a sticker
+   in the same corner or that state only our own figures do not get one. */
+.reveal .source { position: absolute; right: 2.2em; bottom: 0.9em; font-family: var(--small-font); font-size: 0.45em; color: var(--grey); margin: 0; }
+.reveal .source a { color: var(--grey); text-decoration: underline; text-decoration-style: dotted; text-underline-offset: 0.2em; }
+.reveal .source a:hover { color: var(--r-link-color); }
+.reveal .source p { margin: 0; text-align: right; }
+
+/* ---- guessing game (deck 01 statement slide): board, keys, running average ---- */
+.reveal #gg-board { display: flex; flex-wrap: wrap; justify-content: center; font-family: var(--r-code-font); font-size: 1.05em; margin: 0.3em 0; }
+.reveal #gg-board .gg-letter { display: flex; flex-direction: column; align-items: center; min-width: 0.55em; }
+.reveal #gg-board .gg-letter .n { font-family: var(--small-font); font-size: 0.38em; color: var(--grey); line-height: 1; margin-top: 0.15em; }
+.reveal #gg-board .gg-letter .gg-cursor { border-bottom: 4px solid var(--r-main-color); min-width: 0.8em; }
+.reveal #gg-avg { font-family: var(--r-main-font); font-size: 1.3em; text-align: center; margin: 0.15em 0; }
+.reveal #gg-avg .n { color: var(--r-link-color); }
+.reveal #gg-result { font-family: var(--r-main-font); font-size: 1.1em; color: var(--r-link-color); text-align: center; margin: 0.35em 0 0; min-height: 1.4em; }
+.reveal #gg-keys { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.35em; margin-top: 0.3em; }
+.reveal .gg-key { font-family: var(--r-main-font); font-size: 0.65em; width: 2.6em; height: 2.3em; background: transparent; border: 1px solid var(--rule); border-radius: 6px; color: var(--r-main-color); cursor: pointer; }
+.reveal .gg-key:hover { border-color: var(--r-link-color); color: var(--r-link-color); }
+.reveal .gg-key.special { display: block; margin: 0.5em auto 0; width: auto; padding: 0 1.6em; height: 2.6em; font-size: 0.7em; border: 2px solid var(--r-link-color); color: var(--r-link-color); border-radius: 6px; }
+.reveal .bigformula { font-size: 1.5em; text-align: center; margin: 0.5em 0; }
+.reveal .bigfig { display: block; margin: 0.2em auto 0; max-width: 100%; max-height: 19em; width: auto; height: auto; }
+.reveal .footer { position: absolute; left: 1.2em; bottom: 0.5em; font-family: var(--small-font); font-size: 0.45em; color: var(--r-main-color); }
+.reveal .accent { color: var(--r-link-color); }
+
+/* code */
+.reveal pre { width: 100%; font-size: 0.8em; line-height: 1.35; box-shadow: none; margin: 0.5em 0; }
+.reveal pre { border-left: 4px solid var(--r-link-color); }
+.reveal pre code { display: block; padding: 0.8em 1em; background: #eae2cc; color: var(--r-main-color); border-radius: 0; max-height: 520px; }
+.reveal code { font-family: var(--r-code-font); }
+.reveal :not(pre) > code { background: #eae2cc; padding: 0 0.25em; font-size: 0.85em; }
+.hljs-keyword, .hljs-built_in { color: #b02c20; } .hljs-string { color: #4a5f2a; } .hljs-comment { color: var(--grey); font-style: italic; } .hljs-number { color: #2a4a6e; }
+
+/* tables */
+.reveal table { font-size: 0.7em; border-collapse: collapse; margin: 0.5em 0; }
+.reveal table th { font-family: var(--small-font); font-weight: 500; text-align: left; border-bottom: 2px solid var(--r-main-color); padding: 0.3em 0.8em 0.3em 0; }
+.reveal table td { border-bottom: 1px solid var(--rule); padding: 0.3em 0.8em 0.3em 0; }
+
+/* images */
+.reveal img { border: 0; box-shadow: none; background: none; margin: 0; max-height: 600px; max-width: 100%; }
+.reveal figure { margin: 0; }
+
+/* layouts, picked with <!-- .slide: class="..." --> */
+/* title: text left, engraving right, exactly like the cover */
+.reveal .slides section.title { display: grid !important; grid-template-columns: 1fr 1fr; gap: 0; padding: 0; }
+.reveal .slides section.title .text { padding: 1.4em 1.4em; align-self: center; }
+.reveal .slides section.title .text .kicker { margin-bottom: 0.9em; }
+.reveal .slides section.title .text .kicker:last-child { margin: 1.2em 0 0 0; }
+.reveal .slides section.title .text h1 { font-size: 2.3em; margin: 0 0 0.3em 0; line-height: 1.0; }
+.reveal .slides section.title .text .tagline { margin: 0; font-size: 0.85em; }
+.reveal .slides section.title .pic { border-left: 6px solid var(--r-main-color); height: 100%; background-size: cover; background-position: center; }
+/* section divider: full-bleed engraving with a cream band for the heading */
+.reveal .slides section.divider { padding: 0; }
+.reveal .slides section.divider .band { position: absolute; left: 0; right: 0; bottom: 0; background: var(--r-background-color); border-top: 6px solid var(--r-main-color); padding: 0.6em 1.2em; }
+.reveal section.divider .band h2 { margin: 0; }
+/* split: two columns, use <div class="cols"><div>..</div><div>..</div></div> */
+.reveal .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 1.4em; align-items: start; }
+.reveal .cols.pic-left, .reveal .cols.middle { align-items: center; }
+.reveal .cols.wide-left { grid-template-columns: 3fr 2fr; }
+.reveal .cols.wide-right { grid-template-columns: 2fr 3fr; }
+/* pic-left: engraving in the left column, text right, divider line between */
+.reveal .cols.pic-left > div:first-child { border-right: 4px solid var(--r-main-color); padding-right: 1.2em; }
+.reveal .cols > div > :first-child { margin-top: 0; }
+.reveal .cols > div > :last-child { margin-bottom: 0; }
+/* big number / single statement */
+.reveal .slides section.statement { display: flex !important; align-items: center; justify-content: center; text-align: center; }
+.reveal .slides section.statement h1 { font-size: 2.6em; }
+.reveal .slides section.statement .num { font-size: 4em; color: var(--r-link-color); font-family: var(--small-font); line-height: 1; margin-bottom: 0.15em; }
+.reveal .slides section.statement > div > * { width: auto; }
+
+/* progress and controls in the accent colour */
+.reveal .progress { color: var(--r-link-color); height: 4px; }
+.reveal .controls { color: var(--r-link-color); }
+.reveal .slide-number { font-family: var(--small-font); background: none; color: var(--grey); font-size: 14px; }
+
+/* print / pdf */
+@media print { .reveal .slides section.title .pic { -webkit-print-color-adjust: exact; print-color-adjust: exact; } }
+
+/* runnable and fake-run code */
+.reveal .run-wrap { position: relative; }
+.reveal .run-btn { position: absolute; top: 0.4em; right: 0.5em; z-index: 5; font-family: var(--small-font); font-size: 0.5em;
+  background: var(--r-link-color); color: var(--r-background-color); border: 0; padding: 0.25em 0.7em; cursor: pointer; border-radius: 2px; }
+.reveal .run-btn:hover { background: var(--r-link-color-hover); }
+.reveal pre.output { display: none; margin-top: 0.3em; font-family: var(--r-code-font); font-size: 0.75em;
+  background: var(--r-main-color); color: var(--r-background-color); padding: 0.7em 1em; white-space: pre-wrap; border-left: 4px solid var(--r-link-color); }
+.reveal pre.output.visible, .reveal pre.output.fragment.visible { display: block; }
+.reveal pre.output.fragment { display: block; }        /* fake-run output: written by hand, appears on click */
+/* "in words" line under an equation */
+.reveal .inwords { font-family: var(--small-font); font-size: 0.6em; color: var(--grey); margin-top: 0.4em; }
+/* a big worked example: monospace grid for tokens, counts, matrices */
+.reveal .grid-example { font-family: var(--r-code-font); font-size: 0.75em; line-height: 1.6; }
+.reveal .grid-example .hi { background: #f0d9c8; color: var(--r-link-color); padding: 0 0.15em; }
+/* auto-animate: keep the same element ids stable between slides */
+.reveal .step { transition: opacity 0.3s; }
+
+/* design-review fixes 2026-09-26 */
+.reveal pre code table, .reveal pre code table td { font-size: 1em; line-height: 1.35; }   /* step-highlight tables keep the code size */
+.reveal code, .reveal pre, .reveal .grid-example { font-variant-ligatures: none; }            /* <|im_start|> stays readable */
+.reveal sup { vertical-align: super; font-size: 0.65em; line-height: 0; }
+.reveal sub { vertical-align: sub; font-size: 0.65em; line-height: 0; }
+.reveal .kicker { font-size: 0.62em; }
+.reveal .caption, .reveal figcaption { font-size: 0.55em; }
+.reveal pre code { overflow-x: auto; }
+.reveal .katex-display { margin: 0.4em 0; }
+.reveal .katex { font-size: 1.05em; }
+/* build-up steps keep the heading in one place: top-aligned instead of centred */
+.reveal .slides section[data-auto-animate]:not(.title):not(.divider):not(.statement) { justify-content: flex-start; padding-top: 2.4em; }
+
+/* the deck index (index.html with no ?deck) */
+body:has(.deck-index) { background: var(--r-background-color); margin: 0; }
+.deck-index { max-width: 900px; margin: 6vh auto; padding: 0 24px; font-family: var(--r-main-font); color: var(--r-main-color); }
+.deck-index .kicker { font-family: var(--small-font); color: var(--grey); font-size: 15px; margin: 0 0 12px; }
+.deck-index h1 { font-weight: 400; font-size: 56px; margin: 0 0 8px; }
+.deck-index .sub { font-family: var(--small-font); color: var(--grey); font-size: 15px; margin: 0 0 28px; }
+.deck-index ol { list-style: none; padding: 0; margin: 0; counter-reset: deck; }
+.deck-index li { counter-increment: deck; border-top: 1px solid var(--rule); }
+.deck-index li:last-child { border-bottom: 1px solid var(--rule); }
+.deck-index a { display: grid; grid-template-columns: 2.2em 5.5em 1fr; gap: 12px; padding: 12px 4px; text-decoration: none; color: var(--r-main-color); border: 0; font-size: 19px; line-height: 1.35; }
+.deck-index a::before { content: counter(deck, decimal-leading-zero); font-family: var(--small-font); color: var(--r-link-color); }
+.deck-index .date { font-family: var(--small-font); color: var(--grey); font-size: 15px; padding-top: 3px; }
+.deck-index a:hover { background: #eae2cc; }
+.deck-index .sub a { color: var(--r-link-color); }
+
+/* stickers: public-domain engraving cutouts (slides/stickers/), ink on cream, one per slide at most.
+   usage: <img class="sticker br" src="stickers/manicule-right.png">  positions: tr br bl tl; sizes: sm lg; tilt: tilt-l tilt-r */
+.reveal .sticker { position: absolute; width: 180px !important; height: auto; pointer-events: none; opacity: 0.92; z-index: 1;
+  mix-blend-mode: multiply; filter: drop-shadow(0 0 0 transparent); }
+.reveal .sticker.sm { width: 120px !important; } .reveal .sticker.lg { width: 280px !important; }
+.reveal .slides section > p:has(> .sticker) { margin: 0; height: 0; }   /* the wrapper marked adds around a lone img takes no space */
+.reveal .sticker.tr { top: 1.1em; right: 1.2em; } .reveal .sticker.br { bottom: 1.4em; right: 1.2em; }
+.reveal .sticker.bl { bottom: 1.4em; left: 1.2em; } .reveal .sticker.tl { top: 1.1em; left: 1.2em; }
+.reveal .sticker.tilt-l { transform: rotate(-6deg); } .reveal .sticker.tilt-r { transform: rotate(6deg); }
+.reveal .sticker.red { filter: brightness(0) saturate(100%) invert(22%) sepia(60%) saturate(2500%) hue-rotate(345deg) brightness(85%); } /* ink → accent red */
+.reveal .slides section.statement .sticker { opacity: 0.85; }
+.reveal .slides section.divider .sticker { display: none; }   /* never on top of an engraving */
+
+/* python status badge (only shown in decks with runnable blocks) */
+.py-badge { position: fixed; left: 14px; bottom: 10px; z-index: 50; font-family: var(--small-font); font-size: 13px; color: var(--grey);
+  background: var(--r-background-color); border: 1px solid var(--rule); border-radius: 2px; padding: 3px 8px; transition: opacity 1s; }
+.py-badge.ready { color: #4a5f2a; border-color: #4a5f2a; }
+.py-badge.failed { color: var(--r-link-color); border-color: var(--r-link-color); }
+.py-badge.fade { opacity: 0.35; }
+
+.deck-index li.soon { display: grid; grid-template-columns: 2.2em 5.5em 1fr; gap: 12px; padding: 12px 4px; font-size: 19px; line-height: 1.35; color: var(--grey); counter-increment: deck; }
+.deck-index li.soon::before { content: counter(deck, decimal-leading-zero); font-family: var(--small-font); color: var(--rule); }
+.deck-index li.soon em { font-family: var(--small-font); font-style: normal; font-size: 15px; }

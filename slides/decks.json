@@ -1,0 +1,137 @@
+[
+ {
+  "n": "01",
+  "date": "08 Oct",
+  "file": "01-guessing-game.md",
+  "promise": "Language modelling is Shannon's guessing game; an n-gram model plays it by counting. Course logistics.",
+  "title": "The guessing game",
+  "note": "",
+  "available": true
+ },
+ {
+  "n": "02",
+  "date": "15 Oct",
+  "file": "02-tokenizers.md",
+  "promise": "A tokenizer is a compression scheme with a vocabulary budget; BPE from scratch.",
+  "title": "Tokenizers",
+  "note": "",
+  "available": false
+ },
+ {
+  "n": "03",
+  "date": "22 Oct",
+  "file": "03-attention.md",
+  "promise": "Attention is a soft lookup table; write it by hand, then make it causal and multi-headed.",
+  "title": "Attention, by hand",
+  "note": "",
+  "available": false
+ },
+ {
+  "n": "04",
+  "date": "29 Oct",
+  "file": "04-transformer-block.md",
+  "promise": "A modern transformer block is a short list of ablation-tested choices (pre-norm, RMSNorm, RoPE, SwiGLU, no biases).",
+  "title": "The transformer block",
+  "note": "",
+  "available": false
+ },
+ {
+  "n": "05",
+  "date": "05 Nov",
+  "file": "05-training.md",
+  "promise": "Training is one loss, one optimizer, one schedule, and a budget; 6ND tells you what you can afford. Assignment 1 out.",
+  "title": "Training",
+  "note": "Assignment 1 released.",
+  "available": false
+ },
+ {
+  "n": "06",
+  "date": "12 Nov",
+  "file": "06-data-cleaning.md",
+  "promise": "Filtered, deduplicated web is the pretraining corpus; live: clean a small Common Crawl sample in class.",
+  "title": "Data cleaning",
+  "note": "",
+  "available": false
+ },
+ {
+  "n": "07",
+  "date": "19 Nov",
+  "file": "07-data-mixing.md",
+  "promise": "Mixture and quality decide the model more than architecture; mid-training and annealing are data decisions.",
+  "title": "Data mixing",
+  "note": "",
+  "available": false
+ },
+ {
+  "n": "08",
+  "date": "26 Nov",
+  "file": "08-inference.md",
+  "promise": "Leaderboard results (assignment 1 due). Then: decoding is memory-bound; the KV cache, GQA/MLA and quantization exist to move fewer bytes.",
+  "title": "Inference",
+  "note": "",
+  "available": false
+ },
+ {
+  "n": "09",
+  "date": "03 Dec",
+  "file": "09-evaluation.md",
+  "promise": "Perplexity, benchmarks and LLM judges measure different things; report the variance or report nothing.",
+  "title": "Evaluation",
+  "note": "Room: SR 15.05 (room change).",
+  "available": false
+ },
+ {
+  "n": "10",
+  "date": "10 Dec",
+  "file": "10-post-training-sft-rlhf.md",
+  "promise": "SFT teaches the format, a reward model teaches the preference, RL moves the policy toward it.",
+  "title": "Post-training",
+  "note": "",
+  "available": false
+ },
+ {
+  "n": "11",
+  "date": "17 Dec",
+  "file": "11-dpo-grpo.md",
+  "promise": "DPO folds the reward model into the loss; GRPO drops the critic; both are policy gradients in disguise.",
+  "title": "DPO & GRPO",
+  "note": "",
+  "available": false
+ },
+ {
+  "n": "12",
+  "date": "07 Jan",
+  "file": "12-reasoning.md",
+  "promise": "Reasoning models are RL on verifiable rewards plus a long context to think in. Final project brief.",
+  "title": "Reasoning",
+  "note": "",
+  "available": false
+ },
+ {
+  "n": "13",
+  "date": "14 Jan",
+  "file": "13-agents-tools.md",
+  "promise": "Tool use is a token protocol; an agent is a loop around it; most failures are the loop, not the model.",
+  "title": "Agents & tools",
+  "note": "",
+  "available": false
+ },
+ {
+  "n": "14",
+  "date": "21 Jan",
+  "file": "14-reading-a-tech-report.md",
+  "promise": "Read a 2026 frontier tech report as documentation for machinery you built: architecture, data, training, eval, post-training.",
+  "title": "Reading a technical report",
+  "note": "",
+  "available": false
+ },
+ {
+  "n": "15",
+  "date": "28 Jan",
+  "file": "15-final-presentations.md",
+  "promise": "Student presentations of the post-training + eval projects. Short deck: order, rules, rubric, closing.",
+  "title": "Project feedback",
+  "note": "Last session.",
+  "available": false
+ }
+]
