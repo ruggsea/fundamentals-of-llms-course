@@ -58,7 +58,7 @@ The reading material from the slides, per lecture.
 - Andrej Karpathy, [Let's build the GPT Tokenizer](https://www.youtube.com/watch?v=zduSFxRajkE). Builds a production-style tokenizer from scratch; the first hour covers the material of this lecture. A [text version](https://www.fast.ai/posts/2025-10-16-karpathy-tokenizers.html) by fast.ai covers the same content.
 - Sennrich, Haddow, Birch 2016, [Rare Words with Subword Units](https://arxiv.org/abs/1508.07909), sections 1–3.
 - Sebastian Raschka, [BPE tokenizer from scratch](https://github.com/rasbt/LLMs-from-scratch/blob/main/ch02/05_bpe-from-scratch/bpe-from-scratch-simple.ipynb). The same algorithm, implemented step by step in a notebook.
-- Radford et al. 2019, [Language Models are Unsupervised Multitask Learners](https://d4mucfpksywv.cloudfront.net/better-language-models/language_models_are_unsupervised_multitask_learners.pdf), section 2.2. The byte-level BPE that GPT-2 uses.
+- Radford et al. 2019, [Language Models are Unsupervised Multitask Learners](https://cdn.openai.com/better-language-models/language_models_are_unsupervised_multitask_learners.pdf), section 2.2. The byte-level BPE that GPT-2 uses.
 - Stanford CS336, [assignment 1 handout](https://github.com/stanford-cs336/assignment1-basics), section 2. Assignment 1 is to train a small language model; this is the tokenizer part of it.
 
 Additional resources and reading material will be posted in the Discord.

@@ -314,7 +314,7 @@ Note: Three highlights: merge one pair inside a word (1-6), count the pairs (7-1
 - Nothing is ever unknown: emoji, Chinese, a typo, garbage, all decompose into bytes.
 - The merges never cross a character boundary, because the training text was cut first. Next slide.
 
-<p class="source"><a target="_blank" href="https://d4mucfpksywv.cloudfront.net/better-language-models/language_models_are_unsupervised_multitask_learners.pdf">Radford et al. 2019 · GPT-2</a>, section 2.2</p>
+<p class="source"><a target="_blank" href="https://cdn.openai.com/better-language-models/language_models_are_unsupervised_multitask_learners.pdf">Radford et al. 2019 · GPT-2</a>, section 2.2</p>
 
 Note: fast.ai chapter: "Bytes, not letters. Production tokenizers start from the 256 possible bytes... each byte mapped to a printable Unicode character for clean display" (that mapping is GPT-2's bytes_to_unicode). GPT-2: 50,257 vocabulary = 256 + 50,000 merges + 1 special. Radford et al. 2019, "Language Models are Unsupervised Multitask Learners", section 2.2.
 
@@ -525,7 +525,7 @@ Note: Toy numbers, made up to show the arithmetic. A has the bigger vocabulary, 
 - Andrej Karpathy, [Let's build the GPT Tokenizer](https://www.youtube.com/watch?v=zduSFxRajkE). Builds a production-style tokenizer from scratch; the first hour covers the material of this lecture. A [text version](https://www.fast.ai/posts/2025-10-16-karpathy-tokenizers.html) by fast.ai covers the same content.
 - Sennrich, Haddow, Birch 2016, [Rare Words with Subword Units](https://arxiv.org/abs/1508.07909), sections 1–3.
 - Sebastian Raschka, [BPE tokenizer from scratch](https://github.com/rasbt/LLMs-from-scratch/blob/main/ch02/05_bpe-from-scratch/bpe-from-scratch-simple.ipynb). The same algorithm, implemented step by step in a notebook.
-- Radford et al. 2019, [Language Models are Unsupervised Multitask Learners](https://d4mucfpksywv.cloudfront.net/better-language-models/language_models_are_unsupervised_multitask_learners.pdf), section 2.2. The byte-level BPE that GPT-2 uses.
+- Radford et al. 2019, [Language Models are Unsupervised Multitask Learners](https://cdn.openai.com/better-language-models/language_models_are_unsupervised_multitask_learners.pdf), section 2.2. The byte-level BPE that GPT-2 uses.
 - Stanford CS336, [assignment 1 handout](https://github.com/stanford-cs336/assignment1-basics), section 2. Assignment 1 is to train a small language model; this is the tokenizer part of it.
 
 Note: Karpathy's video is the one this deck's arc follows (fast.ai text version: https://www.fast.ai/posts/2025-10-16-karpathy-tokenizers.html). Figures in this deck: slides/figures/02_*.py; tiktoken numbers need the figures venv.
