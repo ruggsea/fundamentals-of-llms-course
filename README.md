@@ -60,6 +60,13 @@ The reading material from the slides, per lecture.
 - Sebastian Raschka, [BPE tokenizer from scratch](https://github.com/rasbt/LLMs-from-scratch/blob/main/ch02/05_bpe-from-scratch/bpe-from-scratch-simple.ipynb). The same algorithm, implemented step by step in a notebook.
 - Radford et al. 2019, [Language Models are Unsupervised Multitask Learners](https://cdn.openai.com/better-language-models/language_models_are_unsupervised_multitask_learners.pdf), section 2.2. The byte-level BPE that GPT-2 uses.
 - Stanford CS336, [assignment 1 handout](https://github.com/stanford-cs336/assignment1-basics), section 2. Assignment 1 is to train a small language model; this is the tokenizer part of it.
+- Gage 1994, [A New Algorithm for Data Compression](https://www.cs.cmu.edu/~wcohen/10-605/papers/bpe.pdf). The data-compression paper BPE started as.
+- janus, [SolidGoldMagikarp (plus prompt generation)](https://www.lesswrong.com/posts/aPeJE8bSo6rAFoLYq/solidgoldmagikarp-plus-prompt-generation-or-glossary), 2023. What happens when a vocabulary token is never activated during training.
+- Beren Millidge, [Integer tokenization is insane](https://www.beren.io/2023-02-04-Integer-tokenization-is-insane/), 2023. How the GPT-2/3 tokenizers split integers, and why that hurts arithmetic.
+- Yu et al. 2023, [MEGABYTE: Predicting Million-byte Sequences with Multiscale Transformers](https://arxiv.org/abs/2305.07185). Modelling raw bytes directly, without a tokenizer.
+- Andrej Karpathy, [minbpe](https://github.com/karpathy/minbpe), 2024. A minimal reference implementation of the algorithm, with exercises.
+- Tao et al. 2024, [Scaling Laws with Vocabulary: Larger Models Deserve Larger Vocabularies](https://arxiv.org/abs/2407.13623). How to choose the vocabulary size jointly with model and data size.
+- [tiktokenizer](https://tiktokenizer.vercel.app/). Type text, see how different OpenAI tokenizers cut it.
 
 Additional resources and reading material will be posted in the Discord.
 

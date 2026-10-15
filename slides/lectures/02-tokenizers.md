@@ -529,3 +529,21 @@ Note: Toy numbers, made up to show the arithmetic. A has the bigger vocabulary, 
 - Stanford CS336, [assignment 1 handout](https://github.com/stanford-cs336/assignment1-basics), section 2. Assignment 1 is to train a small language model; this is the tokenizer part of it.
 
 Note: Karpathy's video is the one this deck's arc follows (fast.ai text version: https://www.fast.ai/posts/2025-10-16-karpathy-tokenizers.html). Figures in this deck: slides/figures/02_*.py; tiktoken numbers need the figures venv.
+
+---
+
+<p class="kicker">Reading</p>
+
+## Extra material.
+
+<img class="sticker br sm" src="stickers/owl.png">
+
+- Gage 1994, [A New Algorithm for Data Compression](https://www.cs.cmu.edu/~wcohen/10-605/papers/bpe.pdf). The data-compression paper BPE started as.
+- janus, [SolidGoldMagikarp (plus prompt generation)](https://www.lesswrong.com/posts/aPeJE8bSo6rAFoLYq/solidgoldmagikarp-plus-prompt-generation-or-glossary), 2023. What happens when a vocabulary token is never activated during training.
+- Beren Millidge, [Integer tokenization is insane](https://www.beren.io/2023-02-04-Integer-tokenization-is-insane/), 2023. How the GPT-2/3 tokenizers split integers, and why that hurts arithmetic.
+- Yu et al. 2023, [MEGABYTE: Predicting Million-byte Sequences with Multiscale Transformers](https://arxiv.org/abs/2305.07185). Modelling raw bytes directly, without a tokenizer.
+- Andrej Karpathy, [minbpe](https://github.com/karpathy/minbpe), 2024. A minimal reference implementation of the algorithm, with exercises.
+- Tao et al. 2024, [Scaling Laws with Vocabulary: Larger Models Deserve Larger Vocabularies](https://arxiv.org/abs/2407.13623). How to choose the vocabulary size jointly with model and data size.
+- [tiktokenizer](https://tiktokenizer.vercel.app/). Type text, see how different OpenAI tokenizers cut it.
+
+Note: Synced to the course README under the lecture 2 section, same list as the Discord message.
