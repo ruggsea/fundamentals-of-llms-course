@@ -215,7 +215,7 @@ Note: Gage 1994, "A New Algorithm for Data Compression", C Users Journal. Sennri
 
 </div>
 
-Note: The example is Wikipedia's BPE article, after Gage 1994. One step per click, and every step stays on screen. The tie at merge 2: "Za" and "ab" both occur twice; capitals sort before lowercase, so "ab" > "Za" and "ab" wins. After merge 3 every pair occurs once: we stop. Eleven symbols became five, and the vocabulary grew by three. The three merges ARE the tokenizer; ask the room what happens to a new string, answer: replay the same merges in the same order (slide 6).
+Note: The example is Wikipedia's BPE article, after Gage 1994. One step per click, and every step stays on screen. The tie at merge 2: "Za" and "ab" both occur twice; capitals sort before lowercase, so "ab" > "Za" and "ab" wins. After merge 3 every pair occurs once: we stop. Eleven symbols became five, and the vocabulary grew by three. The three merges ARE the tokenizer; ask the room what happens to a new string, answer: replay the same merges in the same order (the recipe, next slide).
 
 ---
 
@@ -358,14 +358,14 @@ Note: One row per click if the room is slow; the pattern is GPT-2's, in the tidi
 | contractions | lowercase only, `HOW'S` breaks | case-insensitive `(?i:'s|'S...)` |
 | numbers | ` 42`, ` 12345` one run | runs of at most 3 digits, ` 123` `456` |
 | vocabulary | 50,257 | 200,019 |
-| non-English | fertile | ~40 % fewer tokens for Italian, German |
+| non-English | fertile | ~12 % fewer tokens for Italian (1.59 → 1.41) |
 
 - Number chunks of fixed width make arithmetic easier to learn: the ones digit stops moving.
 - Bigger vocabulary: shorter sequences, and more rows of parameters, Part 4.
 
 <p class="source"><a target="_blank" href="https://www.youtube.com/watch?v=zduSFxRajkE">Karpathy · Let's build the GPT Tokenizer</a>, tiktoken section</p>
 
-Note: fast.ai/Karpathy: o200k_base adds (?i:...) for contractions, \p{N}{2,} digit grouping (he says runs of 3), tightened whitespace/newline handling, 100,000 merges target ("200k vocab"). GPT-2 numbers: 50,257. The "40 %" is from our own figure two slides on (1.59 → 1.41 on the same story is about 12 %; say "fewer", the figure shows how much). TODO: verify the digit-run width (2 or 3) before stating it as fact.
+Note: fast.ai/Karpathy: o200k_base adds (?i:...) for contractions, digit-grouping (he says runs of 3), tightened whitespace/newline handling, 100,000 merges target ("200k vocab"). GPT-2 numbers: 50,257. The 12 % is our own figure two slides on: Pinocchio bytes/token 1.59 on GPT-2, 1.54 on cl100k, 1.41 on o200k (figures/02_tiktoken_languages.py). TODO: verify the digit-run width (2 or 3) before stating it as fact.
 
 ---
 
