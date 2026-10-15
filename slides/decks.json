@@ -14,8 +14,8 @@
   "file": "02-tokenizers.md",
   "promise": "A tokenizer is a compression scheme with a vocabulary budget; BPE from scratch.",
   "title": "Tokenizers",
-  "note": "",
-  "available": false
+  "note": "Ruggero's hour, then Lorenz Prattes on agents.",
+  "available": true
  },
  {
   "n": "03",

@@ -199,3 +199,13 @@ body:has(.deck-index) { background: var(--r-background-color); margin: 0; }
 .deck-index li.soon { display: grid; grid-template-columns: 2.2em 5.5em 1fr; gap: 12px; padding: 12px 4px; font-size: 19px; line-height: 1.35; color: var(--grey); counter-increment: deck; }
 .deck-index li.soon::before { content: counter(deck, decimal-leading-zero); font-family: var(--small-font); color: var(--rule); }
 .deck-index li.soon em { font-family: var(--small-font); font-style: normal; font-size: 15px; }
+
+/* tokenizer demo (deck 02): type text, get one chip per token, real merges from code/tokenizer.py */
+#tok-demo { width: 100%; }
+#tok-demo input { font-family: var(--r-code-font); font-size: 19px; padding: 9px 12px; border: 1px solid var(--rule);
+  border-radius: 2px; background: var(--r-background-color); color: var(--r-main-color); width: 72%; }
+#tok-demo button { font-family: var(--r-small-font); font-size: 15px; color: var(--r-background-color);
+  background: var(--r-main-color); border: 0; border-radius: 2px; padding: 10px 16px; margin-left: 10px; cursor: pointer; }
+#tok-out { margin: 14px 0 8px; min-height: 42px; }
+#tok-out .tok { display: inline-block; font-family: var(--r-code-font); font-size: 19px; padding: 3px 9px;
+  margin: 3px; border: 1px solid var(--rule); border-radius: 3px; }

@@ -24,7 +24,7 @@ Slides and reading lists will be added as we work through them.
 | # | date | topic | slides |
 |---|---|---|---|
 | 01 | 08 Oct | The guessing game. | [slides](https://ruggsea.github.io/fundamentals-of-llms-course/slides/?deck=lectures/01-guessing-game.md) |
-| 02 | 15 Oct | Tokenizers. | after the session |
+| 02 | 15 Oct | Tokenizers. Ruggero's hour, then Lorenz Prattes on agents. | [slides](https://ruggsea.github.io/fundamentals-of-llms-course/slides/?deck=lectures/02-tokenizers.md) |
 | 03 | 22 Oct | Attention, by hand. | after the session |
 | 04 | 29 Oct | The transformer block. | after the session |
 | 05 | 05 Nov | Training. Assignment 1 released. | after the session |
@@ -52,6 +52,13 @@ The reading material from the slides, per lecture.
 - Ben Hoyt, [Markov chain in 20 lines of Python](https://benhoyt.com/writings/markov-chain/). Run it on a book you like.
 - Cameron Wolfe, [Language Model Training and Inference: From Concept to Code](https://cameronrwolfe.substack.com/p/language-model-training-and-inference).
 - Stanford CS336, [lecture 1](https://github.com/stanford-cs336/lectures/blob/main/lecture_01.py), first half.
+
+**02 · Tokenizers** (15 Oct)
+
+- Andrej Karpathy, [Let's build the GPT Tokenizer](https://www.youtube.com/watch?v=zduSFxRajkE). Watch the first hour, then be annoyed it is not yours yet.
+- Sennrich, Haddow, Birch 2016, [Rare Words with Subword Units](https://arxiv.org/abs/1508.07909), sections 1–3.
+- Sebastian Raschka, [BPE tokenizer from scratch](https://github.com/rasbt/LLMs-from-scratch/blob/main/ch02/05_bpe-from-scratch/bpe-from-scratch-simple.ipynb). Then close it and write your own.
+- Stanford CS336, [assignment 1 handout](https://github.com/stanford-cs336/assignment1-basics), section 2. Do the problems.
 
 Additional resources and reading material will be posted in the Discord.
 

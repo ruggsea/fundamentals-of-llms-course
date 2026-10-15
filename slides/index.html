@@ -66,6 +66,7 @@
       renderMathInElement(root, { delimiters: [ { left: '$$', right: '$$', display: true }, { left: '$', right: '$', display: false } ], throwOnError: false });
       setupRunBlocks();
       setupGuessGame();
+      setupTokenizerDemo();
       setupClickAdvance();
     });
     });
@@ -125,8 +126,9 @@
     function setupClickAdvance() {
       document.addEventListener('click', e => {
         if (e.defaultPrevented) return;
-        if (e.target.closest('a, button, input, .run-wrap, .source, .progress, #gg-board, #gg-keys, #gg-count, #gg-result, #gg-avg')) return;
+        if (e.target.closest('a, button, input, .run-wrap, .source, .progress, #gg-board, #gg-keys, #gg-count, #gg-result, #gg-avg, #tok-demo')) return;
         if (Reveal.getCurrentSlide() && Reveal.getCurrentSlide().querySelector('#gg-board')) return;   // the game: arrows only
+        if (Reveal.getCurrentSlide() && Reveal.getCurrentSlide().querySelector('#tok-input:focus')) return;   // typing in the tokenizer demo
         Reveal.next();
       });
     }
@@ -214,6 +216,68 @@
       }, true);
       reset();
       window.ggDebug = () => ({ target: st.target, pos: st.pos, counts: st.counts.slice(), attempts: st.attempts, done: st.done });
+    }
+
+    // ---- tokenizer demo (deck 02): type text, see the pieces our own byte-level BPE makes.
+    // Loads slides/assets/tokenizer_merges.json (the trained merge list, exported from code/tokenizer.py),
+    // pre-tokenizes with the GPT-2 regex, replays the merges in learned order, renders one chip per token.
+    let tokMergesP = null;
+    function setupTokenizerDemo() {
+      Reveal.addEventListener('slidechanged', e => { if (e.currentSlide.querySelector('#tok-demo')) buildTok(e.currentSlide); });
+      const now = document.querySelector('.reveal .slides section.present');
+      if (now && now.querySelector('#tok-demo')) buildTok(now);
+    }
+    function buildTok(section) {
+      const input = section.querySelector('#tok-input');
+      if (!input || input.dataset.on) return; input.dataset.on = '1';
+      const out = section.querySelector('#tok-out');
+      const cnt = section.querySelector('#tok-count');
+      const btn = section.querySelector('#tok-btn');
+      const PRE = /'(?:[sdmt]|ll|ve|re)| ?[^\W\d_]+| ?\d+| ?[^\s\w]+|\s+(?!\S)|\s+/gu;   // GPT-2 pattern, plain JS classes
+      if (!tokMergesP) tokMergesP = fetch('assets/tokenizer_merges.json').then(r => r.json());
+      const enc = new TextEncoder();
+      function bpePiece(bytes, ranks) {                      // replay the merges, earliest learned first
+        let word = Array.from(bytes);
+        while (word.length > 1) {
+          let best = null;
+          for (let i = 0; i < word.length - 1; i++) {
+            const r = ranks.get(word[i] + ',' + word[i + 1]);
+            if (r !== undefined && (best === null || r < best.r)) best = { i, r };
+          }
+          if (best === null) break;
+          word = word.slice(0, best.i).concat([256 + best.r]).concat(word.slice(best.i + 2));
+        }
+        return word;
+      }
+      function render() {
+        tokMergesP.then(merges => {
+          const vocab = Array.from({ length: 256 }, (_, b) => [b]);        // id -> bytes
+          merges.forEach(m => vocab.push(vocab[m[0]].concat(vocab[m[1]])));
+          const ranks = new Map(); merges.forEach((m, i) => ranks.set(m[0] + ',' + m[1], i));
+          const show = id => {
+            const t = new TextDecoder('utf-8', { fatal: false }).decode(new Uint8Array(vocab[id]));
+            return (t || '\ufffd').replace(/ /g, '\u2423').replace(/\n/g, '\u21b5');
+          };
+          const text = input.value;
+          const nBytes = enc.encode(text).length;
+          const pieces = [];
+          for (const m of text.match(PRE) || []) pieces.push(...bpePiece(enc.encode(m), ranks));
+          out.innerHTML = '';
+          pieces.forEach((id, k) => {
+            const span = document.createElement('span');
+            span.className = 'tok';
+            span.textContent = show(id);
+            span.title = 'id ' + id + (id < 256 ? ' (byte)' : ' (merge ' + (id - 256) + ')');
+            span.style.background = ['#eae2cc', '#dcd5bc', '#e6ddc6', '#d8e0d0'][k % 4];
+            out.appendChild(span);
+          });
+          cnt.textContent = pieces.length + ' tokens for ' + nBytes + ' bytes · ' +
+            (nBytes / Math.max(pieces.length, 1)).toFixed(2) + ' bytes per token (more is better compressed)';
+        }).catch(err => { cnt.textContent = 'tokenizer failed to load: ' + err; });
+      }
+      btn.addEventListener('click', e => { e.preventDefault(); e.stopPropagation(); render(); }, true);
+      input.addEventListener('keydown', e => { e.stopPropagation(); if (e.key === 'Enter') { e.preventDefault(); render(); } }, true);
+      render();
     }
   </script>
 </body>
