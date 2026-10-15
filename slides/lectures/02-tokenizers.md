@@ -522,9 +522,9 @@ Note: Toy numbers, made up to show the arithmetic. A has the bigger vocabulary, 
 
 <img class="sticker br sm" src="stickers/owl.png">
 
-- Andrej Karpathy, [Let's build the GPT Tokenizer](https://www.youtube.com/watch?v=zduSFxRajkE). Watch the first hour, then be annoyed it is not yours yet. There is a [text version](https://www.fast.ai/posts/2025-10-16-karpathy-tokenizers.html) if you prefer reading.
+- Andrej Karpathy, [Let's build the GPT Tokenizer](https://www.youtube.com/watch?v=zduSFxRajkE). Builds a production-style tokenizer from scratch; the first hour covers the material of this lecture. A [text version](https://www.fast.ai/posts/2025-10-16-karpathy-tokenizers.html) by fast.ai covers the same content.
 - Sennrich, Haddow, Birch 2016, [Rare Words with Subword Units](https://arxiv.org/abs/1508.07909), sections 1–3.
-- Sebastian Raschka, [BPE tokenizer from scratch](https://github.com/rasbt/LLMs-from-scratch/blob/main/ch02/05_bpe-from-scratch/bpe-from-scratch-simple.ipynb). Then close it and write your own.
-- Stanford CS336, [assignment 1 handout](https://github.com/stanford-cs336/assignment1-basics), section 2. Do the problems.
+- Sebastian Raschka, [BPE tokenizer from scratch](https://github.com/rasbt/LLMs-from-scratch/blob/main/ch02/05_bpe-from-scratch/bpe-from-scratch-simple.ipynb). The same algorithm, implemented step by step in a notebook.
+- Stanford CS336, [assignment 1 handout](https://github.com/stanford-cs336/assignment1-basics), section 2. Describes the tokenizer you will build for assignment 1.
 
 Note: Karpathy's video is the one this deck's arc follows (fast.ai text version: https://www.fast.ai/posts/2025-10-16-karpathy-tokenizers.html). Figures in this deck: slides/figures/02_*.py; tiktoken numbers need the figures venv.
