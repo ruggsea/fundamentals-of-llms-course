@@ -275,8 +275,8 @@ Note: Sennrich et al.'s stylized corpus. zip(word, word[1:]) walks the neighbour
 
 ## The whole training loop fits on one slide. Press run.
 
-```python run [1-6|7-11|12-13]
-def merge(word, a, b):                        # every neighbouring a, b becomes one symbol ab
+```python run
+def merge(word, a, b):                 # every a, b neighbours become ab
     out = []
     for sym in word:
         if out and out[-1] == a and sym == b: out[-1] = a + b
@@ -287,12 +287,12 @@ for step in range(1, 8):
     pairs = {}
     for word, freq in vocab.items():
         for pair in zip(word, word[1:]): pairs[pair] = pairs.get(pair, 0) + freq
-    a, b = max(pairs, key=lambda p: (pairs[p], p))        # most frequent; ties: greater pair
+    a, b = max(pairs, key=lambda p: (pairs[p], p))   # ties: greater pair
     vocab = {merge(w, a, b): f for w, f in vocab.items()}
     print(step, a, "+", b, pairs[a, b], ["·".join(w) for w in vocab])
 ```
 
-Note: Three highlights: merge one pair inside a word (1-6), count the pairs (7-10), pick and merge everywhere (11-13). It prints the seven merges that turn "newest" into one token (the table is in the repo deck if anyone wants it). After Sennrich et al. 2016 Algorithm 1 with the A1 tie-break. It recounts everything after each merge: fine for a slide, too slow for real data; code/tokenizer.py in the course repo only recounts the words that changed. Say so, it is the A1 hint.
+Note: One runnable block. Walk the room through it in three passes: merge one pair inside a word, count the pairs, pick and merge everywhere. It prints the seven merges that turn "newest" into one token. After Sennrich et al. 2016 Algorithm 1 with the A1 tie-break. It recounts everything after each merge: fine for a slide, too slow for real data; code/tokenizer.py in the course repo only recounts the words that changed. Say so, it is the A1 hint.
 
 ---
 
