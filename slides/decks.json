@@ -15,7 +15,17 @@
   "promise": "A tokenizer is a compression scheme with a vocabulary budget; BPE from scratch.",
   "title": "Tokenizers",
   "note": "Ruggero's hour, then Lorenz Prattes on agents.",
-  "available": true
+  "available": true,
+  "extra": [
+   {
+    "label": "Agentic coding slides",
+    "href": "../agentic-coding/slides/"
+   },
+   {
+    "label": "Getting started with coding agents",
+    "href": "https://github.com/ruggsea/fundamentals-of-llms-course/blob/main/agentic-coding/getting-started.md"
+   }
+  ]
  },
  {
   "n": "03",

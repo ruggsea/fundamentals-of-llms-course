@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" font-family="IBM Plex Mono, Menlo, Courier New, monospace" stroke-linecap="round" stroke-linejoin="round">
+<defs>
+<filter id="ink" x="-5%" y="-5%" width="110%" height="110%">
+  <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3" result="wobble"/>
+  <feDisplacementMap in="SourceGraphic" in2="wobble" scale="5" xChannelSelector="R" yChannelSelector="G" result="bent"/>
+  <feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="1" seed="9" result="grain"/>
+  <feDisplacementMap in="bent" in2="grain" scale="1.8" xChannelSelector="R" yChannelSelector="G"/>
+</filter>
+<pattern id="hatch" width="10" height="10" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+  <line x1="0" y1="0" x2="0" y2="10" stroke="#1c1b18" stroke-width="3"/>
+</pattern>
+<g id="art" stroke-width="3"><path fill="none" stroke-dasharray="4 10" d="M400 130 L140 430 M400 130 L660 430 M250 470 H550"/><path fill="none" d="M400 275 V132 M355 362 L200 430 M445 362 L600 430"/><rect fill="none" x="290" y="50" width="220" height="80"/><text stroke="none" x="400.0" y="82.0" font-size="20" text-anchor="middle" letter-spacing="1">PRIVATE</text><text stroke="none" x="400.0" y="110.25" font-size="15" text-anchor="middle" letter-spacing="1">data</text><rect fill="none" x="30" y="430" width="220" height="80"/><text stroke="none" x="140.0" y="462.0" font-size="20" text-anchor="middle" letter-spacing="1">UNTRUSTED</text><text stroke="none" x="140.0" y="490.25" font-size="15" text-anchor="middle" letter-spacing="1">content</text><rect fill="none" x="550" y="430" width="220" height="80"/><text stroke="none" x="660.0" y="462.0" font-size="20" text-anchor="middle" letter-spacing="1">EXTERNAL</text><text stroke="none" x="660.0" y="490.25" font-size="15" text-anchor="middle" letter-spacing="1">communication</text></g>
+</defs>
+<g filter="url(#ink)">
+  <use href="#art" transform="translate(4 3)" stroke="#e04a24" fill="#e04a24" opacity="0.5"/>
+  <use href="#art" stroke="#1c1b18" fill="#1c1b18"/>
+  <circle cx="400" cy="320" r="52" fill="#e04a24"/><text x="400" y="327" font-size="20" text-anchor="middle" letter-spacing="1" fill="#1c1b18">AGENT</text>
+  <text x="40" y="575" font-size="15" letter-spacing="2" fill="#1c1b18">FIG. 7   THE LETHAL TRIFECTA</text>
+</g>
+</svg>

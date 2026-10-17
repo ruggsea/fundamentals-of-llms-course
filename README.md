@@ -24,7 +24,7 @@ Slides and reading lists will be added as we work through them.
 | # | date | topic | slides |
 |---|---|---|---|
 | 01 | 08 Oct | The guessing game. | [slides](https://ruggsea.github.io/fundamentals-of-llms-course/slides/?deck=lectures/01-guessing-game.md) |
-| 02 | 15 Oct | Tokenizers. Ruggero's hour, then Lorenz Prattes on agents. | [slides](https://ruggsea.github.io/fundamentals-of-llms-course/slides/?deck=lectures/02-tokenizers.md) |
+| 02 | 15 Oct | Tokenizers. Ruggero's hour, then Lorenz on agents. | [slides](https://ruggsea.github.io/fundamentals-of-llms-course/slides/?deck=lectures/02-tokenizers.md) · [agents slides](https://ruggsea.github.io/fundamentals-of-llms-course/agentic-coding/slides/) |
 | 03 | 22 Oct | Attention, by hand. | after the session |
 | 04 | 29 Oct | The transformer block. | after the session |
 | 05 | 05 Nov | Training. Assignment 1 released. | after the session |
@@ -108,6 +108,8 @@ The A2 report deadline is not yet confirmed. The A2 code and results deadline an
 Working with generative AI, especially coding agents, is encouraged in this course. You should think of AI as a tool that can help you achieve bigger, more interesting tasks. The tasks at hand do however require deep understanding of the material, even with the help of AI agents. Therefore you will have to find ways to balance vibecoding and personal engagement with content and code. Additionally, you will need to demonstrate your understanding to us in the defences.
 
 Briefly document which tools you used and for what.
+
+To set up a coding agent, follow [Getting started with coding agents](https://github.com/ruggsea/fundamentals-of-llms-course/blob/main/agentic-coding/getting-started.md). It covers Pi with GitHub Copilot Student or OpenCode Go. The [agentic coding slides](https://ruggsea.github.io/fundamentals-of-llms-course/agentic-coding/slides/) from lecture 02 explain how these agents work and where they fail.
 
 ## Assignments
 

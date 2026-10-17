@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Agentic Coding</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/reset.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/reveal.css">
+  <link rel="stylesheet" href="theme/cybernetic.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16/dist/contrib/auto-render.min.js"></script>
+</head>
+<body>
+  <!-- print effects used by theme/cybernetic.css: ragged letter edges and wobbly rules. ?clean switches them off. -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <filter id="rough-text" x="-2%" y="-10%" width="104%" height="120%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.75" numOctaves="1" seed="4" result="grain"/>
+      <feDisplacementMap in="SourceGraphic" in2="grain" scale="2" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+    <filter id="rough-line" x="-1%" y="-150%" width="102%" height="400%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.012 0.3" numOctaves="2" seed="2" result="wobble"/>
+      <feDisplacementMap in="SourceGraphic" in2="wobble" scale="6" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+  </svg>
+  <div class="reveal">
+    <div class="slides">
+      <!-- one markdown file = one deck; default is agentic-coding.md (see README) -->
+      <section data-markdown data-separator="^\n---\n" data-separator-vertical="^\n\|\|\|\n" data-separator-notes="^Note:"><textarea data-template id="deck-src"></textarea></section>
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/reveal.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5/plugin/markdown/markdown.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5/plugin/highlight/highlight.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5/plugin/notes/notes.js"></script>
+  <script>
+    // ?deck=other.md picks the markdown file; default is agentic-coding.md. ?clean drops the print effects.
+    if (new URLSearchParams(location.search).has('clean')) document.documentElement.classList.add('clean');
+    // We fetch the file ourselves so that math can be hidden from the markdown parser (which eats
+    // backslashes and underscores inside $...$) and typeset afterwards with KaTeX auto-render.
+    const deck = new URLSearchParams(location.search).get('deck') || 'agentic-coding.md';
+    document.title = deck.split('/').pop().replace('.md', '');
+    const maths = [];
+    function protectMath(src) {
+      // leave fenced code alone; elsewhere swap $$...$$ and $...$ for placeholders
+      return src.split(/(```[\s\S]*?```)/g).map((chunk, i) => i % 2 ? chunk :
+        chunk.replace(/\$\$[\s\S]*?\$\$|\$(?=\S)(?:\\.|[^$\n])*?(?<=\S)\$/g, m => { maths.push(m); return `MATHPH${maths.length - 1}X`; })
+      ).join('');
+    }
+    function restoreMath(root) {
+      const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+      const nodes = []; while (walker.nextNode()) nodes.push(walker.currentNode);
+      for (const n of nodes) if (/MATHPH\d+X/.test(n.nodeValue)) n.nodeValue = n.nodeValue.replace(/MATHPH(\d+)X/g, (_, i) => maths[+i]);
+    }
+    fetch(deck).then(r => { if (!r.ok) throw new Error(`${deck}: HTTP ${r.status}`); return r.text(); }).catch(err => {
+      // opened as file://: browsers block fetch() there, so say how to serve it instead of showing a blank page
+      document.body.innerHTML = `<pre style="padding:2em;font:16px/1.5 Menlo,monospace">Could not load ${deck} (${err.message}).\n\n` +
+        `Serve the folder over http and open it there:\n\n  cd agentic-coding-workshop/slides\n  python3 -m http.server 8765\n  open http://localhost:8765/</pre>`;
+      throw err;
+    }).then(src => {
+      document.getElementById('deck-src').textContent = protectMath(src);
+      Reveal.initialize({
+      width: 1600, height: 900, margin: 0.04,
+      hash: true, slideNumber: 'c/t', progress: true, controls: false, transition: 'none', backgroundTransition: 'none',
+      autoAnimateDuration: 0.6, autoAnimateEasing: 'ease-in-out',
+      plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+    }).then(() => {
+      const root = document.querySelector('.reveal .slides');
+      restoreMath(root);
+      renderMathInElement(root, { delimiters: [ { left: '$$', right: '$$', display: true }, { left: '$', right: '$', display: false } ], throwOnError: false });
+      setupRunBlocks();
+      // source links open in a new tab, so clicking one mid-talk does not leave the deck
+      root.querySelectorAll('a[href^="http"]').forEach(a => { a.target = '_blank'; a.rel = 'noopener'; });
+    });
+    });
+
+    // ---- runnable Python: a ```python run ... ``` block gets a Run button; output appears below.
+    // Pyodide (Python in WebAssembly, with numpy) loads from the CDN on the first click, ~10 s once.
+    let pyodideReady = null;
+    function loadPyodide_() {
+      if (pyodideReady) return pyodideReady;
+      pyodideReady = new Promise((resolve, reject) => {
+        const s = document.createElement('script');
+        s.src = 'https://cdn.jsdelivr.net/pyodide/v0.27.7/full/pyodide.js';
+        s.onload = () => loadPyodide({ indexURL: 'https://cdn.jsdelivr.net/pyodide/v0.27.7/full/' })
+          .then(async py => { await py.loadPackage('numpy'); resolve(py); }).catch(reject);
+        s.onerror = reject; document.head.appendChild(s);
+      });
+      return pyodideReady;
+    }
+    async function runBlock(pre) {
+      const code = pre.dataset.source; const out = pre.parentElement.querySelector('pre.output');
+      out.textContent = 'loading Python…'; out.classList.add('visible');
+      try {
+        const py = await loadPyodide_();
+        py.setStdout({ batched: t => { out.textContent += t + '\n'; } });
+        out.textContent = '';
+        await py.runPythonAsync(code);
+        if (!out.textContent) out.textContent = '(no output)';
+      } catch (e) { out.textContent = String(e).split('\n').slice(-3).join('\n'); }
+    }
+    function setupRunBlocks() {
+      document.querySelectorAll('pre > code.language-python.run, pre > code[class*="run"]').forEach(code => {
+        const pre = code.parentElement;
+        pre.dataset.source = code.textContent;
+        const wrap = document.createElement('div'); wrap.className = 'run-wrap';
+        pre.parentNode.insertBefore(wrap, pre); wrap.appendChild(pre);
+        const btn = document.createElement('button'); btn.className = 'run-btn'; btn.textContent = 'run ▸';
+        btn.addEventListener('click', e => { e.preventDefault(); e.stopPropagation(); runBlock(pre); }, true);
+        btn.addEventListener('mousedown', e => e.stopPropagation(), true);
+        wrap.appendChild(btn);
+        const out = document.createElement('pre'); out.className = 'output'; wrap.appendChild(out);
+      });
+    }
+  </script>
+</body>
+</html>
