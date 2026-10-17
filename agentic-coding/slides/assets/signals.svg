@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" font-family="IBM Plex Mono, Menlo, Courier New, monospace" stroke-linecap="round" stroke-linejoin="round">
+<defs>
+<filter id="ink" x="-5%" y="-5%" width="110%" height="110%">
+  <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3" result="wobble"/>
+  <feDisplacementMap in="SourceGraphic" in2="wobble" scale="5" xChannelSelector="R" yChannelSelector="G" result="bent"/>
+  <feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="1" seed="9" result="grain"/>
+  <feDisplacementMap in="bent" in2="grain" scale="1.8" xChannelSelector="R" yChannelSelector="G"/>
+</filter>
+<pattern id="hatch" width="10" height="10" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+  <line x1="0" y1="0" x2="0" y2="10" stroke="#1c1b18" stroke-width="3"/>
+</pattern>
+<g id="art" stroke-width="3"><rect fill="none" x="60" y="230" width="160" height="100"/><text stroke="none" x="140.0" y="288.4" font-size="24" text-anchor="middle" letter-spacing="1">AGENT</text><path fill="none" d="M220 280 H318"/><path fill="none" d="M304 287 L318 280 L304 273"/><text stroke="none" x="269" y="268" font-size="14" text-anchor="middle" letter-spacing="1">writes</text><rect fill="none" x="320" y="230" width="160" height="100"/><text stroke="none" x="400.0" y="288.4" font-size="24" text-anchor="middle" letter-spacing="1">CODE</text><path fill="none" d="M480 280 H568"/><path fill="none" d="M554 287 L568 280 L554 273"/><circle fill="none" cx="620" cy="280" r="50"/><text stroke="none" x="620" y="278" font-size="20" text-anchor="middle" letter-spacing="1">CHECK</text><text stroke="none" x="620" y="300" font-size="14" text-anchor="middle" letter-spacing="1">pass?</text><path fill="none" d="M620 330 V450 H140 V332"/><path fill="none" d="M147 346 L140 332 L133 346"/><text stroke="none" x="380" y="475" font-size="15" text-anchor="middle" letter-spacing="1">reward</text><path fill="none" stroke-dasharray="8 8" d="M620 140 V196"/><text stroke="none" x="655" y="190" font-size="30" text-anchor="start" letter-spacing="1">≠</text></g>
+</defs>
+<g filter="url(#ink)">
+  <use href="#art" transform="translate(4 3)" stroke="#e04a24" fill="#e04a24" opacity="0.5"/>
+  <use href="#art" stroke="#1c1b18" fill="#1c1b18"/>
+  <rect x="540" y="60" width="160" height="80" fill="none" stroke="#e04a24" stroke-width="3" stroke-dasharray="10 9"/><text x="620" y="108" font-size="22" text-anchor="middle" letter-spacing="1" fill="#e04a24">INTENT</text>
+  <text x="40" y="575" font-size="15" letter-spacing="2" fill="#1c1b18">FIG. 4   THE CHECK WINS</text>
+</g>
+</svg>

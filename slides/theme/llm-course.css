@@ -175,6 +175,10 @@ body:has(.deck-index) { background: var(--r-background-color); margin: 0; }
 .deck-index .date { font-family: var(--small-font); color: var(--grey); font-size: 15px; padding-top: 3px; }
 .deck-index li a:hover { background: #eae2cc; }
 .deck-index .sub a { color: var(--r-link-color); }
+.deck-index li .extra { margin: -6px 0 0; padding: 0 4px 12px calc(7.7 * 19px + 28px); font-family: var(--small-font); font-size: 15px; color: var(--grey); }
+.deck-index li .extra a { display: inline; padding: 0; font-size: inherit; color: var(--r-link-color); text-decoration: underline; text-underline-offset: 3px; }
+.deck-index li .extra a::before { content: none; }
+.deck-index li .extra a:hover { background: none; }
 
 /* stickers: public-domain engraving cutouts (slides/stickers/), ink on cream, one per slide at most.
    usage: <img class="sticker br" src="stickers/manicule-right.png">  positions: tr br bl tl; sizes: sm lg; tilt: tilt-l tilt-r */

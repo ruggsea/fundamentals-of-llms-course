@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" font-family="IBM Plex Mono, Menlo, Courier New, monospace" stroke-linecap="round" stroke-linejoin="round">
+<defs>
+<filter id="ink" x="-5%" y="-5%" width="110%" height="110%">
+  <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3" result="wobble"/>
+  <feDisplacementMap in="SourceGraphic" in2="wobble" scale="5" xChannelSelector="R" yChannelSelector="G" result="bent"/>
+  <feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="1" seed="9" result="grain"/>
+  <feDisplacementMap in="bent" in2="grain" scale="1.8" xChannelSelector="R" yChannelSelector="G"/>
+</filter>
+<pattern id="hatch" width="10" height="10" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+  <line x1="0" y1="0" x2="0" y2="10" stroke="#1c1b18" stroke-width="3"/>
+</pattern>
+<g id="art" stroke-width="3"><rect fill="none" x="40" y="30" width="720" height="500"/><text stroke="none" x="52" y="56" font-size="15" text-anchor="start" letter-spacing="1">PERMISSIONS &amp; UI</text><rect fill="none" x="85" y="75" width="630" height="410"/><text stroke="none" x="97" y="101" font-size="15" text-anchor="start" letter-spacing="1">CONTEXT MANAGEMENT</text><rect fill="none" x="130" y="120" width="540" height="320"/><text stroke="none" x="142" y="146" font-size="15" text-anchor="start" letter-spacing="1">THE LOOP</text><rect fill="none" x="175" y="165" width="450" height="230"/><text stroke="none" x="187" y="191" font-size="15" text-anchor="start" letter-spacing="1">TOOL DEFINITIONS</text><rect fill="none" x="220" y="210" width="360" height="140"/><text stroke="none" x="232" y="236" font-size="15" text-anchor="start" letter-spacing="1">SYSTEM PROMPT</text></g>
+</defs>
+<g filter="url(#ink)">
+  <use href="#art" transform="translate(4 3)" stroke="#e04a24" fill="#e04a24" opacity="0.5"/>
+  <use href="#art" stroke="#1c1b18" fill="#1c1b18"/>
+  <rect x="310" y="248" width="180" height="84" fill="#e04a24"/><text x="400" y="298" font-size="24" text-anchor="middle" letter-spacing="1" fill="#1c1b18">MODEL</text>
+  <text x="40" y="575" font-size="15" letter-spacing="2" fill="#1c1b18">FIG. 2   AGENT = MODEL + HARNESS</text>
+</g>
+</svg>

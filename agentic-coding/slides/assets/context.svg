@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" font-family="IBM Plex Mono, Menlo, Courier New, monospace" stroke-linecap="round" stroke-linejoin="round">
+<defs>
+<filter id="ink" x="-5%" y="-5%" width="110%" height="110%">
+  <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3" result="wobble"/>
+  <feDisplacementMap in="SourceGraphic" in2="wobble" scale="5" xChannelSelector="R" yChannelSelector="G" result="bent"/>
+  <feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="1" seed="9" result="grain"/>
+  <feDisplacementMap in="bent" in2="grain" scale="1.8" xChannelSelector="R" yChannelSelector="G"/>
+</filter>
+<pattern id="hatch" width="10" height="10" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+  <line x1="0" y1="0" x2="0" y2="10" stroke="#1c1b18" stroke-width="3"/>
+</pattern>
+<g id="art" stroke-width="3"><rect fill="none" x="60" y="260" width="50" height="80"/><path fill="none" d="M85.0 340 V356"/><text stroke="none" x="81.0" y="370" font-size="15" text-anchor="start" letter-spacing="1" transform="rotate(60 81.0 370)">system prompt</text><rect fill="none" x="110" y="260" width="40" height="80"/><path fill="none" d="M130.0 340 V356"/><text stroke="none" x="126.0" y="370" font-size="15" text-anchor="start" letter-spacing="1" transform="rotate(60 126.0 370)">AGENTS.md</text><rect fill="none" x="150" y="260" width="30" height="80"/><path fill="none" d="M165.0 340 V356"/><text stroke="none" x="161.0" y="370" font-size="15" text-anchor="start" letter-spacing="1" transform="rotate(60 161.0 370)">skills</text><rect fill="none" x="180" y="260" width="70" height="80"/><path fill="none" d="M215.0 340 V356"/><text stroke="none" x="211.0" y="370" font-size="15" text-anchor="start" letter-spacing="1" transform="rotate(60 211.0 370)">your messages</text><rect fill="none" x="250" y="260" width="170" height="80"/><path fill="none" d="M335.0 340 V356"/><text stroke="none" x="331.0" y="370" font-size="15" text-anchor="start" letter-spacing="1" transform="rotate(60 331.0 370)">files it read</text><rect fill="url(#hatch)" x="420" y="260" width="260" height="80"/><path fill="none" d="M550.0 340 V356"/><text stroke="none" x="546.0" y="370" font-size="15" text-anchor="start" letter-spacing="1" transform="rotate(60 546.0 370)">tool output</text><rect fill="none" x="680" y="260" width="60" height="80" stroke-dasharray="8 8"/><path fill="none" d="M710.0 340 V356"/><text stroke="none" x="706.0" y="370" font-size="15" text-anchor="start" letter-spacing="1" transform="rotate(60 706.0 370)">free</text><text stroke="none" x="60" y="92" font-size="15" text-anchor="start" letter-spacing="1">quality</text><path fill="none" d="M60 110 H300 C420 110 520 150 740 222"/><path fill="none" stroke-dasharray="6 8" d="M740 70 V250"/><text stroke="none" x="735" y="62" font-size="15" text-anchor="end" letter-spacing="1">window full</text></g>
+</defs>
+<g filter="url(#ink)">
+  <use href="#art" transform="translate(4 3)" stroke="#e04a24" fill="#e04a24" opacity="0.5"/>
+  <use href="#art" stroke="#1c1b18" fill="#1c1b18"/>
+  
+  <text x="40" y="575" font-size="15" letter-spacing="2" fill="#1c1b18">FIG. 3   THE CONTEXT WINDOW</text>
+</g>
+</svg>

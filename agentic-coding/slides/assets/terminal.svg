@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" font-family="IBM Plex Mono, Menlo, Courier New, monospace" stroke-linecap="round" stroke-linejoin="round">
+<defs>
+<filter id="ink" x="-5%" y="-5%" width="110%" height="110%">
+  <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3" result="wobble"/>
+  <feDisplacementMap in="SourceGraphic" in2="wobble" scale="5" xChannelSelector="R" yChannelSelector="G" result="bent"/>
+  <feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="1" seed="9" result="grain"/>
+  <feDisplacementMap in="bent" in2="grain" scale="1.8" xChannelSelector="R" yChannelSelector="G"/>
+</filter>
+<pattern id="hatch" width="10" height="10" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+  <line x1="0" y1="0" x2="0" y2="10" stroke="#1c1b18" stroke-width="3"/>
+</pattern>
+<g id="art" stroke-width="3"><rect fill="none" x="110" y="60" width="580" height="400" rx="26"/><rect fill="none" x="140" y="90" width="520" height="340" rx="14"/><path fill="none" d="M330 460 L300 515 H500 L470 460"/><text stroke="none" x="170" y="140" font-size="17" text-anchor="start" letter-spacing="1" xml:space="preserve">$ pi</text><text stroke="none" x="170" y="182" font-size="17" text-anchor="start" letter-spacing="1" xml:space="preserve">&gt; extend this to byte-pair encoding</text><text stroke="none" x="170" y="224" font-size="17" text-anchor="start" letter-spacing="1" xml:space="preserve">  read   tokenizer.py</text><text stroke="none" x="170" y="266" font-size="17" text-anchor="start" letter-spacing="1" xml:space="preserve">  edit   tokenizer.py</text><text stroke="none" x="170" y="308" font-size="17" text-anchor="start" letter-spacing="1" xml:space="preserve">  bash   pytest -q</text><text stroke="none" x="170" y="350" font-size="17" text-anchor="start" letter-spacing="1" xml:space="preserve">  4 passed</text></g>
+</defs>
+<g filter="url(#ink)">
+  <use href="#art" transform="translate(4 3)" stroke="#e04a24" fill="#e04a24" opacity="0.5"/>
+  <use href="#art" stroke="#1c1b18" fill="#1c1b18"/>
+  <rect x="270" y="372" width="14" height="22" fill="#e04a24"/>
+  <text x="40" y="575" font-size="15" letter-spacing="2" fill="#1c1b18">FIG. 5   THE TERMINAL</text>
+</g>
+</svg>

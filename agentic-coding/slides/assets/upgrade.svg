@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" font-family="IBM Plex Mono, Menlo, Courier New, monospace" stroke-linecap="round" stroke-linejoin="round">
+<defs>
+<filter id="ink" x="-5%" y="-5%" width="110%" height="110%">
+  <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3" result="wobble"/>
+  <feDisplacementMap in="SourceGraphic" in2="wobble" scale="5" xChannelSelector="R" yChannelSelector="G" result="bent"/>
+  <feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="1" seed="9" result="grain"/>
+  <feDisplacementMap in="bent" in2="grain" scale="1.8" xChannelSelector="R" yChannelSelector="G"/>
+</filter>
+<pattern id="hatch" width="10" height="10" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+  <line x1="0" y1="0" x2="0" y2="10" stroke="#1c1b18" stroke-width="3"/>
+</pattern>
+<g id="art" stroke-width="3"><rect fill="none" x="60" y="90" width="160" height="100"/><text stroke="none" x="140.0" y="148.4" font-size="24" text-anchor="middle" letter-spacing="1">AGENT</text><path fill="none" d="M220 140 H578"/><path fill="none" d="M564 147 L578 140 L564 133"/><text stroke="none" x="400" y="128" font-size="14" text-anchor="middle" letter-spacing="1">writes</text><rect fill="none" x="580" y="90" width="160" height="100"/><text stroke="none" x="660.0" y="148.4" font-size="24" text-anchor="middle" letter-spacing="1">CODE</text><path fill="none" d="M660 190 V288"/><path fill="none" d="M667 274 L660 288 L653 274"/><rect fill="none" x="600" y="290" width="120" height="70"/><text stroke="none" x="660.0" y="331.3" font-size="18" text-anchor="middle" letter-spacing="1">TESTS</text><text stroke="none" x="606" y="285" font-size="14" text-anchor="start" letter-spacing="1">2</text><path fill="none" d="M600 325 H522"/><path fill="none" d="M536 332 L522 325 L536 318"/><rect fill="none" x="400" y="290" width="120" height="70"/><text stroke="none" x="460.0" y="331.3" font-size="18" text-anchor="middle" letter-spacing="1">AUTO-RUN</text><text stroke="none" x="406" y="285" font-size="14" text-anchor="start" letter-spacing="1">3</text><path fill="none" d="M400 325 H342"/><path fill="none" d="M356 332 L342 325 L356 318"/><rect fill="none" x="220" y="290" width="120" height="70"/><text stroke="none" x="280.0" y="331.3" font-size="18" text-anchor="middle" letter-spacing="1">REVIEWER</text><text stroke="none" x="226" y="285" font-size="14" text-anchor="start" letter-spacing="1">4</text><path fill="none" d="M220 325 H140 V192"/><path fill="none" d="M147 206 L140 192 L133 206"/><path fill="none" d="M540 485 H660 V362"/><path fill="none" d="M667 376 L660 362 L653 376"/><path fill="none" d="M340 485 H280 V362"/><path fill="none" d="M287 376 L280 362 L273 376"/><rect fill="none" x="40" y="450" width="180" height="70"/><text stroke="none" x="130.0" y="491.3" font-size="18" text-anchor="middle" letter-spacing="1">AGENTS.md</text><text stroke="none" x="46" y="445" font-size="14" text-anchor="start" letter-spacing="1">5</text><path fill="none" d="M130 450 V330"/><path fill="none" d="M137 344 L130 330 L123 344"/><text stroke="none" x="138" y="410" font-size="14" text-anchor="start" letter-spacing="1">+1 rule</text></g>
+</defs>
+<g filter="url(#ink)">
+  <use href="#art" transform="translate(4 3)" stroke="#e04a24" fill="#e04a24" opacity="0.5"/>
+  <use href="#art" stroke="#1c1b18" fill="#1c1b18"/>
+  <rect x="340" y="450" width="200" height="70" fill="none" stroke="#e04a24" stroke-width="3"/><text x="440" y="492" font-size="18" text-anchor="middle" letter-spacing="1" fill="#e04a24">SPEC.md</text><text x="346" y="445" font-size="14" fill="#e04a24">1</text>
+  <text x="40" y="575" font-size="15" letter-spacing="2" fill="#1c1b18">FIG. 6   CHECKS IN THE LOOP</text>
+</g>
+</svg>

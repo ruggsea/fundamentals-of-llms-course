@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" font-family="IBM Plex Mono, Menlo, Courier New, monospace" stroke-linecap="round" stroke-linejoin="round">
+<defs>
+<filter id="ink" x="-5%" y="-5%" width="110%" height="110%">
+  <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3" result="wobble"/>
+  <feDisplacementMap in="SourceGraphic" in2="wobble" scale="5" xChannelSelector="R" yChannelSelector="G" result="bent"/>
+  <feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="1" seed="9" result="grain"/>
+  <feDisplacementMap in="bent" in2="grain" scale="1.8" xChannelSelector="R" yChannelSelector="G"/>
+</filter>
+<pattern id="hatch" width="10" height="10" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+  <line x1="0" y1="0" x2="0" y2="10" stroke="#1c1b18" stroke-width="3"/>
+</pattern>
+<g id="art" stroke-width="3"><path fill="none" d="M40 300 H128"/><path fill="none" d="M114 307 L128 300 L114 293"/><text stroke="none" x="40" y="285" font-size="15" text-anchor="start" letter-spacing="1">prompt</text><circle fill="none" cx="150" cy="300" r="22"/><path fill="none" d="M135 285 L165 315 M135 315 L165 285"/><path fill="none" d="M172 300 H228"/><path fill="none" d="M214 307 L228 300 L214 293"/><rect fill="none" x="230" y="240" width="180" height="120"/><text stroke="none" x="320.0" y="293.4" font-size="24" text-anchor="middle" letter-spacing="1">MODEL</text><text stroke="none" x="320.0" y="320.25" font-size="15" text-anchor="middle" letter-spacing="1">text → text</text><path fill="none" d="M410 300 H548"/><path fill="none" d="M534 307 L548 300 L534 293"/><text stroke="none" x="479" y="288" font-size="15" text-anchor="middle" letter-spacing="1">tool call</text><rect fill="none" x="550" y="240" width="200" height="120"/><text stroke="none" x="650.0" y="293.4" font-size="24" text-anchor="middle" letter-spacing="1">HARNESS</text><text stroke="none" x="650.0" y="320.25" font-size="15" text-anchor="middle" letter-spacing="1">runs bash</text><path fill="none" d="M650 360 V470 H150 V324"/><path fill="none" d="M157 338 L150 324 L143 338"/><text stroke="none" x="400" y="495" font-size="15" text-anchor="middle" letter-spacing="1">result</text><path fill="none" d="M320 240 V160"/><path fill="none" d="M327 174 L320 160 L313 174"/><path fill="none" d="M320 82 L358 120 L320 158 L282 120 Z"/><text stroke="none" x="320" y="125" font-size="14" text-anchor="middle" letter-spacing="1">done?</text><path fill="none" d="M358 120 H738"/><path fill="none" d="M724 127 L738 120 L724 113"/><text stroke="none" x="380" y="108" font-size="14" text-anchor="start" letter-spacing="1">yes</text><text stroke="none" x="738" y="105" font-size="15" text-anchor="end" letter-spacing="1">answer</text></g>
+</defs>
+<g filter="url(#ink)">
+  <use href="#art" transform="translate(4 3)" stroke="#e04a24" fill="#e04a24" opacity="0.5"/>
+  <use href="#art" stroke="#1c1b18" fill="#1c1b18"/>
+  
+  <text x="40" y="575" font-size="15" letter-spacing="2" fill="#1c1b18">FIG. 1   AN AGENT IS A WHILE LOOP</text>
+</g>
+</svg>
