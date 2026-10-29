@@ -525,7 +525,7 @@ Note: Every row stays near 0.25: a model before training is the dial at almost z
 
 ## With learned tables, the weights become meaningful.
 
-<img src="figures/03_gpt2_row.png" alt="GPT-2 small layer 4 head 3: the share of each earlier word in how it attends" style="height: 250px;">
+<img src="figures/03_gpt2_row.png" alt="GPT-2 small layer 4 head 3: the share of each earlier word in how it attends" style="height: 250px; width: auto; display: block; margin: 0.2em auto 0;">
 
 <p class="caption">GPT-2 small, layer 4, head 3, on our sentence: 84% of "it" goes to "cat". The same shape as our hand-made table, with 768 learned numbers per key instead of 4.</p>
 
@@ -537,7 +537,7 @@ Note: Nobody wrote this row: training put the 84% there (lecture 5). Data: slide
 
 ## Dividing by √d keeps the dial from being turned too far.
 
-![Largest attention weight with and without scaling](figures/03_scaling_sqrt_dk.png)
+<img src="figures/03_scaling_sqrt_dk.png" alt="Largest attention weight with and without scaling" style="height: 480px; width: auto; display: block; margin: 0.2em auto 0;">
 
 <p class="caption">Random queries and keys, 64 keys, 2,000 queries per point. Without the division, a key size of 1,024 puts 0.95 of the weight on one key.</p>
 
