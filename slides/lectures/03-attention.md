@@ -578,7 +578,7 @@ Note: Kinds, and how they differ in training: lecture 5, say and move on. This i
 
 <p class="kicker">Causal · 2</p>
 
-## The zoo in three names: BERT reads, GPT writes, T5 translates.
+## 3 kinds of models.
 
 | kind | trained to | you know it as |
 |---|---|---|
