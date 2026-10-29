@@ -10,7 +10,7 @@
 </div>
 <div class="pic" style="background-image:url(assets/babbage.jpg)"></div>
 
-Note: Babbage's Difference Engine: a machine that computes tables. Today's machine computes a table too, a different one for every sentence. The lecture in one sentence, to say at the start and at the end: each word asks a question, compares it with a label on every earlier word, and takes a weighted average of what those words carry. Pacing for 90 minutes: recap and problem 8, history 12, soft lookup and the dial 22, context 6, queries keys values 16, causal and heads with the lab 12, GPT-2 and what is missing 8, close 2. Running behind: drop the shuffle press-run (the table slide carries the message).
+Note: Babbage's Difference Engine: a machine that computes tables. Today's machine computes a table too, a different one for every sentence. The lecture in one sentence, to say at the start and at the end: each word asks a question, compares it with a label on every earlier word, and takes a weighted average of what those words carry. Pacing for 90 minutes: recap and problem 8, history 12, soft lookup and the dial 22, context 6, queries keys values 16, causal and heads with the lab 14, GPT-2 and what is missing 8, close 2. Running behind: drop the shuffle press-run (the table slide carries the message).
 
 ---
 
@@ -565,18 +565,42 @@ Note: Script: figures/03_scaling_sqrt_dk.py. x is d_k, the numbers per key; y is
 </div>
 <div>
 
-<img src="figures/03_attention_weights.png" alt="A full 4 by 4 attention table with no mask: every word may look at every word" style="height: 300px;">
+<img src="figures/03_attention_weights.png" alt="A full 4 by 4 attention table with no mask: every word may look at every word">
 
-<p class="caption">An encoder's table: no blanks, both directions. Our hand-made table from two slides back, no mask.</p>
+<p class="caption">An encoder's table: no blanks, both directions. The same 4 × 4 table as the causal slides, with no mask.</p>
 
 </div>
 </div>
 
-Note: Kinds, and how they differ in training: lecture 5, say and move on. This is also why "attention is left-to-right" is false as a general claim: the mask decides, and encoders show exactly that. The table is the same hand-made 4 x 4 from Queries keys values 3; the next slides blank the future on it.
+Note: Kinds, and how they differ in training: lecture 5, say and move on. This is also why "attention is left-to-right" is false as a general claim: the mask decides, and encoders show exactly that. The table is the same hand-made 4 x 4 as the QKV 4x4 slide, drawn at the same size as the mask figure on the next-but-one slide, so the room sees one table lose its future.
 
 ---
 
 <p class="kicker">Causal · 2</p>
+
+## The zoo in three names: BERT reads, GPT writes, T5 translates.
+
+| kind | trained to | you know it as |
+|---|---|---|
+| encoder | fill in a masked word | BERT (2018), ModernBERT (2024) |
+| decoder | guess the next word | GPT-2 (2019), Llama, Qwen, Gemma |
+| encoder-decoder | translate the sentence | the 2017 Transformer, T5 (2019), NLLB (2022) |
+
+<div class="fragment">
+
+- An encoder learns by filling blanks: cover a word, guess it from all the others. Its rows then power search and classification.
+- A decoder guesses every next word, and using it means letting it write on. Every model in this course is one.
+- Encoder-decoders keep the 2017 shape: an encoder reads the source sentence, a decoder writes the other language.
+
+</div>
+
+<p class="source"><a target="_blank" href="https://arxiv.org/abs/1810.04805">Devlin et al. 2018 (BERT)</a> · <a target="_blank" href="https://arxiv.org/abs/1910.10683">Raffel et al. 2019 (T5)</a> · <a target="_blank" href="https://arxiv.org/abs/2207.04672">NLLB Team 2022</a></p>
+
+Note: Concrete names, so the kinds are not abstract: a five-in-the-exam kind of slide. BERT (Devlin et al., arXiv 1810.04805, 2018) is encoder-only, trained on masked words; ModernBERT (Answer.AI and Instadeep, December 2024) is the current encoder for embeddings. T5 (Raffel et al., arXiv 1910.10683, 2019) is encoder-decoder, text-to-text. NLLB (arXiv 2207.04672, 2022) translates 200 languages, encoder-decoder with a mixture of experts; translation still ships that way. Llama (2023), Qwen (2023) and Gemma (2024) are decoders, like GPT. If asked about cross-attention: the decoder in a translation model also attends to the encoder's rows; we meet it in lecture 14's tech-report reading, and it is Bahdanau's "decoder looks back at every word" with learned questions.
+
+---
+
+<p class="kicker">Causal · 3</p>
 
 ## One pass plays every round of Shannon's game at once.
 
@@ -594,7 +618,7 @@ Note: Lecture 1: the guesser sees only the text so far. A sentence of T tokens g
 
 ---
 
-<p class="kicker">Causal · 3</p>
+<p class="kicker">Causal · 4</p>
 
 ## Masking makes the model autoregressive: no word may read its own future.
 
@@ -632,7 +656,7 @@ Note: np.triu(..., k=1) marks the cells above the diagonal: the future. Masking 
 
 ---
 
-<p class="kicker">Causal · 4</p>
+<p class="kicker">Causal · 5</p>
 
 ## Without the mask, the past changes when you edit the future. Press run.
 
@@ -792,7 +816,7 @@ Note: Order-blindness of attention without positions. The causal mask leaks a li
 
 <p class="kicker">Reading</p>
 
-## Read these before next Thursday.
+## Recommended reading.
 
 <img class="sticker br sm" src="stickers/owl.png">
 
