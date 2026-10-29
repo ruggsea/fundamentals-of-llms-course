@@ -108,6 +108,8 @@
 .reveal .slides section.divider { padding: 0; }
 .reveal .slides section.divider .band { position: absolute; left: 0; right: 0; bottom: 0; background: var(--r-background-color); border-top: 6px solid var(--r-main-color); padding: 0.6em 1.2em; }
 .reveal section.divider .band h2 { margin: 0; }
+.reveal section.divider .band .quote { font-family: var(--small-font); font-size: 0.48em; color: var(--grey); font-style: italic; margin: 0.55em 0 0; }
+.reveal section.divider .band .quote-src { font-family: var(--small-font); font-size: 0.48em; color: var(--grey); margin: 0.2em 0 0; }
 /* split: two columns, use <div class="cols"><div>..</div><div>..</div></div> */
 .reveal .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 1.4em; align-items: start; }
 .reveal .cols.pic-left, .reveal .cols.middle { align-items: center; }

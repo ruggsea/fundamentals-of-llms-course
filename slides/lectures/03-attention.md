@@ -198,7 +198,8 @@ Note: Abstract: 28.4 BLEU English to German, "improving over the existing best r
 
 ## A dictionary where every key matches a little.
 
-<p class="tagline">"At its heart, attention is really just a weighted sum of context vectors, with a lot of complications added to how the weights are computed and what gets summed." — Jurafsky & Martin</p>
+<p class="quote">"At its heart, attention is really just a weighted sum of context vectors, with a lot of complications added to how the weights are computed and what gets summed."</p>
+<p class="quote-src">Jurafsky & Martin, Speech and Language Processing</p>
 </div>
 
 ---
