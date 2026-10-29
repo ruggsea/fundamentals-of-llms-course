@@ -72,7 +72,7 @@ Note: Fine print, for whoever asks: the soft weighting of a decoder's inputs app
 </div>
 <div>
 
-- A recurrent network (RNN) reads one symbol at a time and keeps a running vector. Its guess for the next symbol depends on everything read so far, squeezed into one vector.
+- A recurrent network (RNN) reads one symbol at a time and keeps one running vector, updated at every word. Its guess for the next symbol depends on everything read so far, squeezed into that one vector.
 - 2010: word by word, a mixture of RNN language models cut perplexity about in half against a strong n-gram model.
 - 2011: letter by letter on 100 MB of English Wikipedia. 2013: the same trick writes text and handwriting.
 - Then the same machine was pointed at translation, and that is where attention comes from.
@@ -409,10 +409,10 @@ Note: Jurafsky and Martin open their transformer chapter exactly here (SLP3 ch. 
 ## The bigram saw one word of context; attention sees the whole sentence.
 
 - Lecture 1's bigram guessed the next word from the word before it; even the best n-grams saw a handful of words. The sentence never entered.
-- Part 1's RNNs tried: read every word, keep the state updated, carry the whole sentence in one running vector.
-- The modern way is the one we just built by hand: every word asks the words around it, and blends in the ones that answer.
+- Part 1's RNNs tried: one running vector, updated at every word, with the whole sentence squeezed into it.
+- The modern way keeps a vector for every word instead: each one asks the words around it, and blends in the ones that answer.
 
-Note: The lecture's arc in one throwback: counting (lecture 1), a running state (Part 1), attention (Part 2). The last bullet is Ruggero's phrasing. "The words around it" is deliberate: the causal slides turn "around" into "before" when the model writes left to right.
+Note: The lecture's arc in one throwback: counting (lecture 1), a running state (Part 1), attention (Part 2). The contrast to say out loud: the RNN's vector is rewritten at every word, so distant information has to survive the overwrites; attention keeps a vector per word, and any earlier word is reachable in one step. "The words around it" is deliberate: the causal slides turn "around" into "before" when the model writes left to right.
 
 ---
 
