@@ -76,7 +76,7 @@ The reading material from the slides, per lecture.
 - Vaswani et al. 2017, [Attention Is All You Need](https://arxiv.org/abs/1706.03762), section 3.2. The paper that introduced the transformer; this section defines scaled dot-product and multi-head attention.
 - Sutskever, Vinyals, Le 2014, [Sequence to Sequence Learning with Neural Networks](https://arxiv.org/abs/1409.3215). The one-vector translation model attention was built to fix.
 - Peter Bloem, [Transformers from scratch](https://peterbloem.nl/blog/transformers). Self-attention built up from a plain weighted sum, with PyTorch code.
-- Jay Alammar, [The Illustrated Word2vec](https://jalammar.github.io/illustrated-word2vec/). How word vectors are learned, and why their directions carry meaning.
+- Jay Alammar, [The Illustrated GPT-2](https://jalammar.github.io/illustrated-gpt2/). GPT-2, piece by piece: the token embeddings, and the attention we computed today, at GPT-2's real size.
 - [Transformer Explainer](https://poloclub.github.io/transformer-explainer/). GPT-2 running in the browser; type a prompt and look at its attention.
 - Callum McDougall, [Induction heads, illustrated](https://www.lesswrong.com/posts/TvrfY4c9eaGLeyDkE/induction-heads-illustrated), 2023. Two heads working together to copy text, step by step in diagrams.
 - Adam Casson, [Transformer FLOPs](https://www.adamcasson.com/posts/transformer-flops). Where the compute of a transformer goes, and when attention's share grows.
