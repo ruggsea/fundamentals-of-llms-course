@@ -10,7 +10,7 @@
 </div>
 <div class="pic" style="background-image:url(assets/babbage.jpg)"></div>
 
-Note: Babbage's Difference Engine: a machine that computes tables. Today's machine computes a table too, a different one for every sentence. The lecture in one sentence, to say at the start and at the end: each word asks a question, compares it with a label on every earlier word, and takes a weighted average of what those words carry. Pacing for 90 minutes: recap and problem 8, history 12, soft lookup up to the exercise 25, the exercise plus break 15, queries keys values 15, causal and heads with the lab 10, GPT-2 and what is missing 10, close 3. Running behind: drop the dial live slide (the point survives in its note) and the shuffle press-run (the table slide carries the message).
+Note: Babbage's Difference Engine: a machine that computes tables. Today's machine computes a table too, a different one for every sentence. The lecture in one sentence, to say at the start and at the end: each word asks a question, compares it with a label on every earlier word, and takes a weighted average of what those words carry. Pacing for 90 minutes: recap and problem 8, history 12, soft lookup and the dial 27, break 10, queries keys values 15, causal and heads with the lab 10, GPT-2 and what is missing 8, close 2. Running behind: drop the shuffle press-run (the table slide carries the message).
 
 ---
 
@@ -161,7 +161,7 @@ Rows: the French the model wrote. Columns: the English it read. White is weight 
 
 <p class="source">Bahdanau, Cho, Bengio 2014, Figure 3(a)</p>
 
-Note: Their caption: "Each pixel shows the weight α_ij of the annotation of the j-th source word for the i-th target word (see Eq. (6)), in grayscale (0: black, 1: white)." The model learned the alignment from translation pairs alone. Keep this picture in mind: by the end of today the room computes one of these rows by hand.
+Note: Their caption: "Each pixel shows the weight α_ij of the annotation of the j-th source word for the i-th target word (see Eq. (6)), in grayscale (0: black, 1: white)." The model learned the alignment from translation pairs alone. Keep this picture in mind: by the end of today we compute one of these rows by hand.
 
 ---
 
@@ -332,6 +332,28 @@ Note: `X @ q` is the dot product of q with every row of X at once. `weights @ X`
 
 ---
 
+<p class="kicker">Soft lookup · 7</p>
+
+## Multiplying every score by the same number sharpens the weights.
+
+| scores for cat, sat, mat, it | weight on "cat" | the other three |
+|---|---|---|
+| 1, 0, 0, 0 | 0.475 | 0.175 each |
+| 2, 0, 0, 0 | 0.711 | 0.096 each |
+| 6, 0, 0, 0 | 0.993 | 0.002 each |
+
+<p class="inwords">The question is the same, "it" looking for an animal; only how loudly it is asked changes. At 2: e² = 7.389 against three 1s, and 7.389 / 10.389 = 0.711. At 6: e⁶ = 403 against three 1s, and 403 / 406 = 0.993.</p>
+
+<div class="fragment">
+
+The ranking never changes; the winner just takes more. The next slide puts a dial on it.
+
+</div>
+
+Note: Sets up the live dial and Part 3's scaling. The scores [1, 0, 0, 0] are "it" asking with a 1 instead of a 2, a quieter question. Ends of the dial: at 0 every word gets 0.25, at 10 the Python dict. Part 3 divides the scores by √d to stop exactly this. figures/03_attention_by_hand.py prints all three rows (dial x1, x2, x6). Lecture 8 gives this multiplier a name, temperature; we do not need it today.
+
+---
+
 <p class="kicker">Live</p>
 
 ## Turn the dial up and the soft dictionary becomes the Python dict.
@@ -346,33 +368,7 @@ Note: `X @ q` is the dot product of q with every row of X at once. `weights @ X`
 
 </div>
 
-Note: Drag slowly. At 0 every word gets 0.25: a blurry average. At 1: 0.475 on cat. At 2: 0.711, our slide. At 6: 0.993. At 10 the weight is 1.000 on cat and 0 elsewhere: an exact lookup, the dict from five slides ago. The hard dict is one end of a dial, and a model can learn to sit anywhere on it. We come back to the dial in Part 3: dividing by √d keeps it from being turned too far.
-
----
-
-<!-- .slide: class="statement" -->
-
-<div>
-
-# Now you: do two lookups, by hand.
-
-1. "it" asks with $q = [1, 0, 0, 0]$. Compute the four weights and the output z.
-2. Write a query that makes "it" look at "mat". What is z now?
-
-<p>e⁰ = 1 · e¹ = 2.718 · e² = 7.389 · e³ = 20.09</p>
-
-| word | animal | object | action | pronoun |
-|---|---|---|---|---|
-| cat | 1 | 0 | 0 | 0 |
-| sat | 0 | 0 | 1 | 0 |
-| mat | 0 | 1 | 0 | 0 |
-| it | 0 | 0 | 0 | 1 |
-
-</div>
-
-Note: 10 minutes, pairs, pen and paper. Then check with the numpy slide. Answers (figures/03_attention_by_hand.py): 1. scores [1, 0, 0, 0], e: 2.718, 1, 1, 1, sum 5.718, weights 0.475, 0.175, 0.175, 0.175; z = [0.475, 0.175, 0.175, 0.175], half cat. A weaker question gives a blurrier answer: the dial again. 2. q = [0, 2, 0, 0] (or any query with its largest number in the object column): weights 0.711 on mat, z = [0.096, 0.711, 0.096, 0.096]. Point: the query decides what a word looks for. Then the break.
-
-<img class="sticker br" src="stickers/manicule-right.png">
+Note: Drag slowly. At 0 every word gets 0.25: a blurry average. At 1: 0.475 on cat. At 2: 0.711, our slide. At 6: 0.993. At 10 the weight is 1.000 on cat and 0 elsewhere: an exact lookup, the dict from the start of this part. The hard dict is one end of a dial, and a model can learn to sit anywhere on it. We come back to the dial in Part 3: dividing by √d keeps it from being turned too far.
 
 ---
 
@@ -393,6 +389,9 @@ Note: 10 minutes, pairs, pen and paper. Then check with the numpy slide. Answers
 - In a library, the question you bring, the label on the spine and the text inside the book are three different things.
 - A word is all three at once. "it" looks for an animal, is labelled a pronoun, and hands over whatever it carries.
 - So each role gets its own learned table: $W_Q$ for queries, $W_K$ for keys, $W_V$ for values.
+- The names are borrowed: memory networks used a query to match keys in an associative memory, and the Transformer kept them.
+
+<p class="source"><a target="_blank" href="https://web.stanford.edu/~jurafsky/slp3/">Jurafsky & Martin, Speech and Language Processing (3rd ed. draft), ch. 7, historical notes</a></p>
 
 Note: Until now we wrote the query by hand and used the rows themselves as keys and values. With W_Q different from W_K, the question a word asks is no longer "who looks like me". The three come from the same row x; only the table differs. The names are older than the Transformer: "the terminology of key, query, and value, came from memory networks", "by using an embedding of a query to match keys representing content in an associative memory" (Jurafsky & Martin, 3rd edition draft, ch. 7, historical notes; Sukhbaatar et al. 2015, Weston et al. 2015, Graves et al. 2014). Our soft dictionary is that metaphor, grown a spine.
 
