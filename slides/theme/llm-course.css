@@ -56,7 +56,7 @@
 
 /* clickable source, bottom right of a slide (STYLE.md, slide grammar). Slides that carry a sticker
    in the same corner or that state only our own figures do not get one. */
-.reveal .source { position: absolute; right: 2.2em; bottom: 0.9em; font-family: var(--small-font); font-size: 0.45em; color: var(--grey); margin: 0; }
+.reveal .source { position: absolute; right: 2.2em; bottom: 0.9em; font-family: var(--small-font); font-size: 0.45em; color: var(--grey); margin: 0; text-align: right; }
 .reveal .source a { color: var(--grey); text-decoration: underline; text-decoration-style: dotted; text-underline-offset: 0.2em; }
 .reveal .source a:hover { color: var(--r-link-color); }
 .reveal .source p { margin: 0; text-align: right; }
@@ -122,6 +122,7 @@
 .reveal .slides section.statement h1 { font-size: 2.6em; }
 .reveal .slides section.statement .num { font-size: 4em; color: var(--r-link-color); font-family: var(--small-font); line-height: 1; margin-bottom: 0.15em; }
 .reveal .slides section.statement > div > * { width: auto; }
+.reveal .slides section.statement ol, .reveal .slides section.statement ul { list-style-position: inside; margin-left: 0; padding-left: 0; }
 
 /* progress and controls in the accent colour */
 .reveal .progress { color: var(--r-link-color); height: 4px; }
@@ -213,3 +214,27 @@ body:has(.deck-index) { background: var(--r-background-color); margin: 0; }
 #tok-out { margin: 14px 0 8px; min-height: 42px; }
 #tok-out .tok { display: inline-block; font-family: var(--r-code-font); font-size: 19px; padding: 3px 9px;
   margin: 3px; border: 1px solid var(--rule); border-radius: 3px; }
+
+/* attention demo (deck 03): GPT-2's real attention, one chip per token, shaded by weight */
+#attn-demo { width: 100%; }
+#attn-demo .attn-controls { font-family: var(--r-small-font); font-size: 17px; color: var(--grey); margin-bottom: 10px; }
+#attn-demo select { font-family: var(--r-small-font); font-size: 17px; padding: 6px 8px; border: 1px solid var(--rule);
+  background: var(--r-background-color); color: var(--r-main-color); margin-right: 18px; }
+#attn-out { line-height: 1; margin: 10px 0 6px; }
+#attn-out .atok { display: inline-flex; flex-direction: column; align-items: center; font-family: var(--r-code-font);
+  font-size: 21px; padding: 4px 7px; margin: 22px 3px 3px; border: 1px solid var(--rule); border-radius: 3px;
+  cursor: pointer; position: relative; min-width: 1.4em; }
+#attn-out .atok .w { position: absolute; top: -20px; font-family: var(--r-small-font); font-size: 13px; color: var(--grey); }
+#attn-out .atok .b { font-family: var(--r-small-font); font-size: 13px; color: var(--grey); margin-top: 4px; min-height: 13px; }
+#attn-out .atok.q { outline: 3px solid var(--r-main-color); outline-offset: 2px; }
+#attn-out .atok.future { color: var(--rule); border-style: dashed; }
+
+/* sharpness dial (deck 03): one slider, four weight bars */
+#dial-demo { width: 100%; font-family: var(--r-small-font); }
+#dial-demo input[type=range] { width: 60%; accent-color: var(--r-link-color); }
+#dial-val { font-size: 22px; color: var(--grey); margin-left: 14px; }
+#dial-bars .row { display: flex; align-items: center; margin: 10px 0; font-size: 24px; }
+#dial-bars .w { width: 3.5em; font-family: var(--r-code-font); }
+#dial-bars .bar { flex: 1; height: 30px; border: 1px solid var(--rule); margin: 0 14px; }
+#dial-bars .bar span { display: block; height: 100%; background: var(--r-link-color); transition: width 0.15s; }
+#dial-bars .n { width: 4em; font-family: var(--r-code-font); }

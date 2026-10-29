@@ -70,6 +70,8 @@
       setupRunBlocks();
       setupGuessGame();
       setupTokenizerDemo();
+      setupAttentionDemo();
+      setupDial();
       setupClickAdvance();
     });
     });
@@ -129,7 +131,7 @@
     function setupClickAdvance() {
       document.addEventListener('click', e => {
         if (e.defaultPrevented) return;
-        if (e.target.closest('a, button, input, .run-wrap, .source, .progress, #gg-board, #gg-keys, #gg-count, #gg-result, #gg-avg, #tok-demo')) return;
+        if (e.target.closest('a, button, input, .run-wrap, .source, .progress, #gg-board, #gg-keys, #gg-count, #gg-result, #gg-avg, #tok-demo, #attn-demo, #dial-demo')) return;
         if (Reveal.getCurrentSlide() && Reveal.getCurrentSlide().querySelector('#gg-board')) return;   // the game: arrows only
         if (Reveal.getCurrentSlide() && Reveal.getCurrentSlide().querySelector('#tok-input:focus')) return;   // typing in the tokenizer demo
         Reveal.next();
@@ -280,6 +282,85 @@
       }
       btn.addEventListener('click', e => { e.preventDefault(); e.stopPropagation(); render(); }, true);
       input.addEventListener('keydown', e => { e.stopPropagation(); if (e.key === 'Enter') { e.preventDefault(); render(); } }, true);
+      render();
+    }
+    // ---- attention demo (deck 03): GPT-2 small's real attention on the lecture's sentence.
+    // Loads slides/assets/gpt2_attention.json (exported by figures/03_gpt2_attention.py). Click a token: it becomes
+    // the query, and every earlier token is shaded by the weight that head gives it. Pick any of the 144 heads.
+    let attnP = null;
+    function setupAttentionDemo() {
+      Reveal.addEventListener('slidechanged', e => { if (e.currentSlide.querySelector('#attn-demo')) buildAttn(e.currentSlide); });
+      const now = document.querySelector('.reveal .slides section.present');
+      if (now && now.querySelector('#attn-demo')) buildAttn(now);
+    }
+    function buildAttn(section) {
+      const demo = section.querySelector('#attn-demo');
+      if (!demo || demo.dataset.on) return; demo.dataset.on = '1';
+      const out = demo.querySelector('#attn-out'), cap = demo.querySelector('#attn-info');
+      const pick = demo.querySelector('#attn-head'), bitsBox = demo.querySelector('#attn-bits');
+      if (!attnP) attnP = fetch('assets/gpt2_attention.json').then(r => r.json());
+      attnP.then(d => {
+        const named = d.named_heads;
+        for (let l = 0; l < 12; l++) for (let h = 0; h < 12; h++) {
+          const o = document.createElement('option'); const key = l + '.' + h;
+          o.value = key; o.textContent = 'layer ' + l + ', head ' + h + (named[key] ? '  (' + named[key] + ')' : '');
+          pick.appendChild(o);
+        }
+        pick.value = d.default_head;
+        let query = d.query;                                   // "it"
+        const chips = d.tokens.map((t, i) => {
+          const c = document.createElement('span'); c.className = 'atok';
+          c.innerHTML = '<span class="w"></span><span class="t"></span><span class="b"></span>';
+          c.querySelector('.t').textContent = t.replace(/ /g, '␣');
+          c.addEventListener('click', e => { e.stopPropagation(); query = i; render(); });
+          out.appendChild(c); return c;
+        });
+        function render() {
+          const row = d.heads[pick.value][query];
+          let best = 0; row.forEach((w, k) => { if (w > row[best]) best = k; });
+          chips.forEach((c, k) => {
+            const w = k <= query ? row[k] : 0;
+            c.classList.toggle('q', k === query); c.classList.toggle('future', k > query);
+            c.style.background = k <= query ? 'rgba(176, 44, 32, ' + (w / 100).toFixed(2) + ')' : 'transparent';
+            c.style.color = w > 55 ? '#f6f1e4' : '';
+            c.querySelector('.b').style.color = w > 55 ? '#f6f1e4' : '';
+            c.querySelector('.w').textContent = k <= query && w >= 5 ? w + '%' : '';
+            const b = d.surprisal_bits[k];
+            c.querySelector('.b').textContent = bitsBox.checked && b !== null ? b.toFixed(1) : '';
+          });
+          cap.textContent = 'Query "' + d.tokens[query].trim() + '" (token ' + query + '): ' + row[best] + '% of the weight goes to "' +
+            d.tokens[best].trim() + '" (token ' + best + '). Grey tokens are the future, masked.';
+        }
+        pick.addEventListener('change', render);
+        pick.addEventListener('keydown', e => e.stopPropagation(), true);
+        bitsBox.addEventListener('change', render);
+        render();
+      }).catch(err => { cap.textContent = 'attention data failed to load: ' + err; });
+    }
+    // ---- sharpness dial (deck 03): "it" asks for an animal; the slider multiplies its four scores [1, 0, 0, 0].
+    // At 0 every word gets a quarter; turned far up, all the weight lands on "cat": the Python dict again.
+    function setupDial() {
+      Reveal.addEventListener('slidechanged', e => { if (e.currentSlide.querySelector('#dial-demo')) buildDial(e.currentSlide); });
+      const now = document.querySelector('.reveal .slides section.present');
+      if (now && now.querySelector('#dial-demo')) buildDial(now);
+    }
+    function buildDial(section) {
+      const demo = section.querySelector('#dial-demo');
+      if (!demo || demo.dataset.on) return; demo.dataset.on = '1';
+      const slider = demo.querySelector('#dial-s'), val = demo.querySelector('#dial-val'), bars = demo.querySelector('#dial-bars');
+      const words = ['cat', 'sat', 'mat', 'it'], scores = [1, 0, 0, 0];
+      bars.innerHTML = words.map(w => '<div class="row"><span class="w">' + w + '</span><span class="bar"><span></span></span><span class="n"></span></div>').join('');
+      function render() {
+        const s = parseFloat(slider.value), e = scores.map(x => Math.exp(s * x)), sum = e.reduce((a, b) => a + b, 0);
+        val.textContent = 'scores × ' + s.toFixed(1) + (s >= 8 ? ': this is the Python dict again' : s === 0 ? ': every word the same' : '');
+        bars.querySelectorAll('.row').forEach((r, i) => {
+          const w = e[i] / sum;
+          r.querySelector('.bar span').style.width = (100 * w).toFixed(1) + '%';
+          r.querySelector('.n').textContent = w.toFixed(3);
+        });
+      }
+      slider.addEventListener('input', render);
+      slider.addEventListener('keydown', e => e.stopPropagation(), true);
       render();
     }
   </script>

@@ -24,21 +24,20 @@ Slides and reading lists will be added as we work through them.
 | # | date | topic | slides |
 |---|---|---|---|
 | 01 | 08 Oct | The guessing game. | [slides](https://ruggsea.github.io/fundamentals-of-llms-course/slides/?deck=lectures/01-guessing-game.md) |
-| 02 | 15 Oct | Tokenizers. Ruggero's hour, then Lorenz on agents. | [slides](https://ruggsea.github.io/fundamentals-of-llms-course/slides/?deck=lectures/02-tokenizers.md) · [agents slides](https://ruggsea.github.io/fundamentals-of-llms-course/agentic-coding/slides/) |
-| 03 | 22 Oct | Attention, by hand. | after the session |
-| 04 | 29 Oct | The transformer block. | after the session |
-| 05 | 05 Nov | Training. Assignment 1 released. | after the session |
-| 06 | 12 Nov | Data cleaning. | after the session |
-| 07 | 19 Nov | Data mixing. | after the session |
-| 08 | 26 Nov | Inference. | after the session |
-| 09 | 03 Dec | Evaluation. Room: SR 15.05 (room change). | after the session |
-| 10 | 10 Dec | Post-training. | after the session |
+| 02 | 15 Oct | Tokenizers. Ruggero's hour, then Lorenz on agents. | [slides](https://ruggsea.github.io/fundamentals-of-llms-course/slides/?deck=lectures/02-tokenizers.md) · [Agentic coding slides](https://ruggsea.github.io/fundamentals-of-llms-course/agentic-coding/slides/) · [Getting started with coding agents](https://github.com/ruggsea/fundamentals-of-llms-course/blob/main/agentic-coding/getting-started.md) |
+| 03 | 29 Oct | Attention, by hand. | [slides](https://ruggsea.github.io/fundamentals-of-llms-course/slides/?deck=lectures/03-attention.md) |
+| 04 | 05 Nov | The transformer block. | after the session |
+| 05 | 12 Nov | Training. Assignment 1 released. | after the session |
+| 06 | 19 Nov | Data cleaning. | after the session |
+| 07 | 26 Nov | Data mixing. | after the session |
+| 08 | 03 Dec | Inference. Room: SR 15.05 (room change). | after the session |
+| 09 | 10 Dec | Evaluation. | after the session |
 | | 16–18 Dec | Assignment 1 defences, bookable slots | |
-| 11 | 17 Dec | DPO & GRPO. | after the session |
-| 12 | 07 Jan | Reasoning. | after the session |
-| 13 | 14 Jan | Agents & tools. | after the session |
-| 14 | 21 Jan | Reading a technical report. | after the session |
-| 15 | 28 Jan | Project feedback. Last session. | after the session |
+| 10 | 17 Dec | Post-training. | after the session |
+| 11 | 07 Jan | DPO & GRPO. | after the session |
+| 12 | 14 Jan | Reasoning. | after the session |
+| 13 | 21 Jan | Agents & tools. | after the session |
+| 14 | 28 Jan | Reading a technical report. Last session. | after the session |
 | | 3–5 Feb | Assignment 2 defences, bookable slots | |
 
 ## Reading material
@@ -67,6 +66,20 @@ The reading material from the slides, per lecture.
 - Andrej Karpathy, [minbpe](https://github.com/karpathy/minbpe), 2024. A minimal reference implementation of the algorithm, with exercises.
 - Tao et al. 2024, [Scaling Laws with Vocabulary: Larger Models Deserve Larger Vocabularies](https://arxiv.org/abs/2407.13623). How to choose the vocabulary size jointly with model and data size.
 - [tiktokenizer](https://tiktokenizer.vercel.app/). Type text, see how different OpenAI tokenizers cut it.
+
+**03 · Attention, by hand** (29 Oct)
+
+- Grant Sanderson (3Blue1Brown), [Attention in transformers, step-by-step](https://www.3blue1brown.com/lessons/attention). Queries, keys, masking and heads, with pictures; there is a video and a text version.
+- Sebastian Raschka, [LLMs from scratch, chapter 3](https://github.com/rasbt/LLMs-from-scratch/blob/main/ch03/01_main-chapter-code/ch03.ipynb). The attention of this lecture, implemented step by step in a notebook.
+- Dan Jurafsky and James Martin, [Speech and Language Processing](https://web.stanford.edu/~jurafsky/slp3/), 3rd edition draft, ch. 7, "Transformers and Pretraining". Free online. The same climb from a weighted sum, and historical notes on where the query, key and value names come from.
+- Bahdanau, Cho, Bengio 2014, [Neural Machine Translation by Jointly Learning to Align and Translate](https://arxiv.org/abs/1409.0473), sections 1 to 3. Where attention was first proposed, for translation.
+- Vaswani et al. 2017, [Attention Is All You Need](https://arxiv.org/abs/1706.03762), section 3.2. The paper that introduced the transformer; this section defines scaled dot-product and multi-head attention.
+- Sutskever, Vinyals, Le 2014, [Sequence to Sequence Learning with Neural Networks](https://arxiv.org/abs/1409.3215). The one-vector translation model attention was built to fix.
+- Peter Bloem, [Transformers from scratch](https://peterbloem.nl/blog/transformers). Self-attention built up from a plain weighted sum, with PyTorch code.
+- Jay Alammar, [The Illustrated Word2vec](https://jalammar.github.io/illustrated-word2vec/). How word vectors are learned, and why their directions carry meaning.
+- [Transformer Explainer](https://poloclub.github.io/transformer-explainer/). GPT-2 running in the browser; type a prompt and look at its attention.
+- Callum McDougall, [Induction heads, illustrated](https://www.lesswrong.com/posts/TvrfY4c9eaGLeyDkE/induction-heads-illustrated), 2023. Two heads working together to copy text, step by step in diagrams.
+- Adam Casson, [Transformer FLOPs](https://www.adamcasson.com/posts/transformer-flops). Where the compute of a transformer goes, and when attention's share grows.
 
 Additional resources and reading material will be posted in the Discord.
 
