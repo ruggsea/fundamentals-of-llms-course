@@ -10,7 +10,7 @@
 </div>
 <div class="pic" style="background-image:url(assets/babbage.jpg)"></div>
 
-Note: Babbage's Difference Engine: a machine that computes tables. Today's machine computes a table too, a different one for every sentence. The lecture in one sentence, to say at the start and at the end: each word asks a question, compares it with a label on every earlier word, and takes a weighted average of what those words carry. Pacing for 90 minutes: recap and problem 8, history 12, soft lookup and the dial 27, break 10, queries keys values 15, causal and heads with the lab 10, GPT-2 and what is missing 8, close 2. Running behind: drop the shuffle press-run (the table slide carries the message).
+Note: Babbage's Difference Engine: a machine that computes tables. Today's machine computes a table too, a different one for every sentence. The lecture in one sentence, to say at the start and at the end: each word asks a question, compares it with a label on every earlier word, and takes a weighted average of what those words carry. Pacing for 90 minutes: recap and problem 8, history 12, soft lookup and the dial 22, context 6, queries keys values 16, causal and heads with the lab 12, GPT-2 and what is missing 8, close 2. Running behind: drop the shuffle press-run (the table slide carries the message).
 
 ---
 
@@ -220,6 +220,12 @@ A *soft* dictionary would answer "kitten" anyway: compare it with every key, see
 
 </div>
 
+<div class="fragment">
+
+Build a table out of the dict's parts and you have attention's ingredients: the query is what you ask, the keys label every row, the values are what the rows hand over. Three intuitions make the table work, one per slide from here.
+
+</div>
+
 Note: Press run: "Katze", then a KeyError. The key that is asked for is the query. Attention keeps the three parts of a dict, query, key and value, and replaces "equal or not" by "how similar".
 
 ---
@@ -245,7 +251,7 @@ Note: Each row is the token's row of the embedding table from lecture 2, written
 
 <p class="kicker">Soft lookup · 3</p>
 
-## Step 1: a score is the dot product of the query with each key.
+## Intuition 1: the score of a query and a key is their dot product.
 
 $$ q \cdot k = q_1 k_1 + q_2 k_2 + q_3 k_3 + q_4 k_4 $$
 
@@ -259,15 +265,17 @@ $$ q \cdot k = q_1 k_1 + q_2 k_2 + q_3 k_3 + q_4 k_4 $$
 
 The dot product is large when two vectors point the same way.
 
+<img src="figures/03_dot_product.png" alt="Three pairs of vectors: the same way gives a large score, at right angles zero, opposite ways negative" style="height: 200px;">
+
 </div>
 
-Note: Do one on the board. This is the "how similar" of the soft dict. With these readable vectors the scores are whole numbers; in a real model they are anything.
+Note: Do one on the board. This is the "how similar" of the soft dict. With these readable vectors the scores are whole numbers; in a real model they are anything. The strip (figures/03_dot_product.py): the same way gives a large product, right angles zero, opposite ways negative.
 
 ---
 
 <p class="kicker">Soft lookup · 4</p>
 
-## Step 2: softmax turns scores into weights that sum to one.
+## Intuition 2: softmax turns the scores into weights that sum to one.
 
 <div style="font-size: 0.95em; display: flex; justify-content: center;">
 
@@ -295,7 +303,7 @@ Note: Why e and not just the scores: scores can be negative, weights cannot. Sof
 
 <p class="kicker">Soft lookup · 5</p>
 
-## Step 3: the output is the weighted average of the values.
+## Intuition 3: the output is the weighted average of the values.
 
 $$ z = 0.711\, v_{\text{cat}} + 0.096\, v_{\text{sat}} + 0.096\, v_{\text{mat}} + 0.096\, v_{\text{it}} $$
 
@@ -309,7 +317,13 @@ $$ z = [0.711,\ 0.096,\ 0.096,\ 0.096] $$
 
 </div>
 
-Note: This z replaces the row of "it" for the next layer. That is the whole point: after attention, "it" carries what it refers to. The weights tell you where the values came from, not why: say this now, it comes back with GPT-2 in Part 5.
+<div class="fragment">
+
+The values are little rows of meaning, and the blend is "it"'s new row: "the output of attention is a sum of the embeddings of prior tokens weighted by their similarity with the current token embedding" (Jurafsky & Martin).
+
+</div>
+
+Note: This z replaces the row of "it" for the next layer. That is the whole point: after attention, "it" carries what it refers to. The weights tell you where the values came from, not why: say this now, it comes back with GPT-2 in Part 4. The quote: Jurafsky & Martin, SLP3 ch. 7, §7.1.1.
 
 ---
 
@@ -372,6 +386,54 @@ Note: Drag slowly. At 0 every word gets 0.25: a blurry average. At 1: 0.475 on c
 
 ---
 
+<p class="kicker">Context · 1</p>
+
+## A word's row of numbers has to take in its context.
+
+- "it" can mean different things. You cannot look "it" up in a dictionary and know what it means here: that depends on the sentence.
+- Lecture 2 gave every token the same row in every sentence. A word whose meaning changes with context needs a row that changes too.
+- The row attention writes is called a contextual embedding: the meaning of the word, in this sentence.
+
+<div class="fragment">
+
+"Attention is a method for enriching the representation of a token by incorporating contextual information." That is Jurafsky and Martin's one-line version of today.
+
+</div>
+
+Note: Jurafsky and Martin open their transformer chapter exactly here (SLP3 ch. 7, §7.1): their running example is "The chicken didn't cross the road because it", where the row for "it" keeps both readings open. Our cat/mat pair from the third slide is the same point, now with the name for the row. The quote: their transformer slide deck, web.stanford.edu/~jurafsky/slp3/slides/transformer_aug26.pdf.
+
+---
+
+<p class="kicker">Context · 2</p>
+
+## The bigram saw one word of context; attention sees the whole sentence.
+
+- Lecture 1's bigram guessed the next word from the word before it; even the best n-grams saw a handful of words. The sentence never entered.
+- Part 1's RNNs tried: read every word, keep the state updated, carry the whole sentence in one running vector.
+- The modern way is the one we just built by hand: every word asks the words around it, and blends in the ones that answer.
+
+Note: The lecture's arc in one throwback: counting (lecture 1), a running state (Part 1), attention (Part 2). The last bullet is Ruggero's phrasing. "The words around it" is deliberate: the causal slides turn "around" into "before" when the model writes left to right.
+
+---
+
+<p class="kicker">Context · 3</p>
+
+## When some words matter more for a word, we say the word attends to them.
+
+- Some context is more relevant than the rest: for "it", the cat matters; the "the" before it does not.
+- That is the word attention: the words that really matter for understanding a word are the ones it attends to.
+- The weights we computed by hand are "how much each word matters": 0.711 on "cat" is attention, given by one word to another.
+
+<div class="fragment">
+
+So: attention "weighs and combines the representations from appropriate other tokens" (Jurafsky & Martin). Next question: who writes the queries?
+
+</div>
+
+Note: Jurafsky & Martin, SLP3 ch. 7, §7.1: "Attention is the mechanism in the transformer that weighs and combines the representations from appropriate other tokens in the context...". Until now we wrote the queries by hand; Part 3 is about the model learning them.
+
+---
+
 <!-- .slide: class="divider" data-background-image="assets/press.jpg" data-background-size="cover" data-background-position="center" -->
 
 <div class="band">
@@ -399,21 +461,13 @@ Note: Until now we wrote the query by hand and used the rows themselves as keys 
 
 <p class="kicker">Queries, keys, values · 2</p>
 
-## Three tables turn each row into a query, a key and a value.
-
-$$ Q = X W_Q \qquad K = X W_K \qquad V = X W_V $$
-
-<p class="inwords">Each W is a table of numbers; multiplying a row by it is called a projection. Our hand-made W<sub>Q</sub> has a 4 where the pronoun row meets the animal column, and another where the action row meets it: "it" and "sat" both go looking for an animal. W<sub>K</sub> and W<sub>V</sub> leave the rows as they are.</p>
-
-<div class="fragment">
+## The whole thing is one equation.
 
 $$ \text{Attention}(Q, K, V) = \text{softmax}\left(\frac{QK^\top}{\sqrt{d_k}}\right) V $$
 
-<p class="inwords">The three steps for every word at once. QKᵀ is the table of every query's dot product with every key; the ᵀ (transpose) swaps K's rows and columns. d<sub>k</sub> is how many numbers a key has, here 4, so the scores are divided by √4 = 2. The 4 in W<sub>Q</sub> divided by 2 gives our score of 2.</p>
+<p class="inwords">Part 2's three intuitions, for every word at once. Q, K and V are the sentence's rows after the learned tables: X times W<sub>Q</sub> gives the queries, X times W<sub>K</sub> the keys, X times W<sub>V</sub> the values. QKᵀ is the table of every query's dot product with every key; the ᵀ (transpose) swaps K's rows and columns. d<sub>k</sub> is how many numbers a key has, here 4, so the scores are divided by √4 = 2. The 4 in our hand-made W<sub>Q</sub> divided by 2 gives our score of 2.</p>
 
-</div>
-
-Note: Vaswani et al. 2017, eq. (1). Kᵀ, "K transposed", is K with rows and columns swapped. Real models learn these tables in training (lecture 5); nobody writes a 4 by hand. Why √d_k: three slides on.
+Note: Vaswani et al. 2017, eq. (1); the same equation heads Jurafsky and Martin's §7.1.1. The three projection formulas moved into the in-words line (the slide was three formulas before). The hand-made W<sub>Q</sub> has its 4 where the pronoun row meets the animal column, and another where the action row meets it: "it" and "sat" both go looking for an animal; W<sub>K</sub> and W<sub>V</sub> leave the rows as they are. Real models learn these tables in training (lecture 5); nobody writes a 4 by hand. Why √d_k: three slides on.
 
 ---
 
@@ -444,7 +498,7 @@ Each row is one word asking, and sums to 1.
 </div>
 </div>
 
-Note: figures/03_attention_by_hand.py. Rows: the word asking. Columns: the word looked at. "sat" and "it" put 0.711 on "cat". "cat" and "mat" ask nothing (their query is all zeros), so they spread 0.25 everywhere. sum(axis=1, keepdims=True) divides each row by its own sum. Ask: what is wrong with row "cat"? It looks at words that come after it. Part 4.
+Note: figures/03_attention_by_hand.py. Rows: the word asking. Columns: the word looked at. "sat" and "it" put 0.711 on "cat". "cat" and "mat" ask nothing (their query is all zeros), so they spread 0.25 everywhere. sum(axis=1, keepdims=True) divides each row by its own sum. Ask: what is wrong with row "cat"? It looks at words that come after it; the masking slides fix that.
 
 ---
 
@@ -469,27 +523,60 @@ Note: Every row stays near 0.25: a model before training is the dial at almost z
 
 <p class="kicker">Queries, keys, values · 5</p>
 
+## With learned tables, the weights become meaningful.
+
+<img src="figures/03_gpt2_row.png" alt="GPT-2 small layer 4 head 3: the share of each earlier word in how it attends" style="height: 250px;">
+
+<p class="caption">GPT-2 small, layer 4, head 3, on our sentence: 84% of "it" goes to "cat". The same shape as our hand-made table, with 768 learned numbers per key instead of 4.</p>
+
+Note: Nobody wrote this row: training put the 84% there (lecture 5). Data: slides/assets/gpt2_attention.json, from figures/03_gpt2_attention.py; the strip is figures/03_gpt2_row.py. n = 1 sentence, a demonstration, and the same head is clickable in Part 4's live demo.
+
+---
+
+<p class="kicker">Queries, keys, values · 6</p>
+
 ## Dividing by √d keeps the dial from being turned too far.
 
 ![Largest attention weight with and without scaling](figures/03_scaling_sqrt_dk.png)
 
 <p class="caption">Random queries and keys, 64 keys, 2,000 queries per point. Without the division, a key size of 1,024 puts 0.95 of the weight on one key.</p>
 
+<div class="fragment">
+
+Why the square root: a dot product adds d products, so the scores grow with the width all by themselves. A sum of d terms is typically about √d in size, so dividing by √d keeps every width on the same dial.
+
+</div>
+
 Note: Script: figures/03_scaling_sqrt_dk.py. x is d_k, the numbers per key; y is the biggest weight in a row, averaged. A dot product adds d_k products, so with more numbers per key the scores spread wider: their standard deviation grows as √d_k (2.0 at d_k = 4, 32 at d_k = 1,024). Wider scores are the dial turned up. Dividing by √d_k puts it back. Vaswani et al., section 3.2.1: "We suspect that for large values of d_k, the dot products grow large in magnitude, pushing the softmax function into regions where it has extremely small gradients." The gradient part is theirs and is lecture 5's business.
 
 ---
 
-<!-- .slide: class="divider" data-background-image="assets/semaphore.jpg" data-background-size="cover" data-background-position="center" -->
+<p class="kicker">Causal · 1</p>
 
-<div class="band">
-<p class="kicker">Part 4</p>
+## Transformers come in kinds; ours reads only the past.
 
-## No peeking, and many questions at once.
+<div class="cols wide-right">
+<div>
+
+- Some read the sentence in both directions, the encoders: attention left to right and right to left, every word may look at every word.
+- Some write text, the decoders, like GPT. To guess the next word, a model cannot read the words that come after it.
+- The first Transformer was both at once, an encoder-decoder pair for translation. We build the decoder half.
+
 </div>
+<div>
+
+<img src="figures/03_attention_weights.png" alt="A full 4 by 4 attention table with no mask: every word may look at every word" style="height: 300px;">
+
+<p class="caption">An encoder's table: no blanks, both directions. Our hand-made table from two slides back, no mask.</p>
+
+</div>
+</div>
+
+Note: Kinds, and how they differ in training: lecture 5, say and move on. This is also why "attention is left-to-right" is false as a general claim: the mask decides, and encoders show exactly that. The table is the same hand-made 4 x 4 from Queries keys values 3; the next slides blank the future on it.
 
 ---
 
-<p class="kicker">Causal · 1</p>
+<p class="kicker">Causal · 2</p>
 
 ## One pass plays every round of Shannon's game at once.
 
@@ -497,13 +584,19 @@ Note: Script: figures/03_scaling_sqrt_dk.py. x is d_k, the numbers per key; y is
 
 Each position guesses the next token. If position t could see token t + 1, it would copy the answer. Reading only what came before is what causal means here.
 
+<div class="fragment">
+
+A trigram position saw two words of context; a decoder position sees everything before it. All T positions come in one pass.
+
+</div>
+
 Note: Lecture 1: the guesser sees only the text so far. A sentence of T tokens gives T guesses in one pass, which is why training is cheap (lecture 5). How z becomes a guess over the vocabulary is lecture 4. Script: figures/03_next_token.py. Grey arrows: what each position may read.
 
 ---
 
-<p class="kicker">Causal · 2</p>
+<p class="kicker">Causal · 3</p>
 
-## The causal mask blanks everything above the diagonal.
+## Masking makes the model autoregressive: no word may read its own future.
 
 <div class="cols wide-right">
 <div>
@@ -514,6 +607,12 @@ S[future] = -np.inf
 ```
 
 A hidden score becomes −∞ before the softmax, and $e^{-\infty} = 0$. The row still sums to 1.
+
+<div class="fragment">
+
+The mask stops the model from peeking into the future, and teaches each word to attend only to words already said: a word cannot take its meaning from words that were not there when it was read.
+
+</div>
 
 <div class="fragment">
 
@@ -533,7 +632,7 @@ Note: np.triu(..., k=1) marks the cells above the diagonal: the future. Masking 
 
 ---
 
-<p class="kicker">Causal · 3</p>
+<p class="kicker">Causal · 4</p>
 
 ## Without the mask, the past changes when you edit the future. Press run.
 
@@ -558,13 +657,15 @@ Note: We change only the last word, "it" to "cat", and print the output for the 
 
 <p class="kicker">Multi-head</p>
 
-## Two heads ask two questions: one finds the animal, the other the object.
+## Context can matter in many ways, so attention runs several heads in parallel.
+
+One head gives one weighted average: it must pick the animal or the mat. Two heads keep both readings open.
 
 ![Two causal attention tables: head 1 sends it to cat, head 2 sends it to mat](figures/03_heads.png)
 
 <p class="caption">Head 2's W<sub>Q</sub> has its 4 where the pronoun row meets the object column. "it" gets one answer from each, and the layers after decide between them.</p>
 
-Note: Back to the two sentences at the start: "tired" or "soft" comes after "it", so a left-to-right model has to keep both readings. One head cannot: it gives one weighted average. In a real model the heads are not separate models. The query, key and value tables are cut into H column blocks, each head uses its own block, and the outputs are glued back together and mixed by one more table, W_O (lecture 4). The cut is a reshape, so 8 heads of 64 numbers cost about the same as one head of 512. Vaswani et al., section 3.2.2: h = 8 heads, d_k = 64. "The layers after" means later blocks of the stack, next week's word. Script: figures/03_attention_by_hand.py.
+Note: The lead is Ruggero's framing: this contextualising can happen in many ways, so several questions are asked at once. Jurafsky and Martin: "each head might be attending to the context for different purposes: heads might be specialized to represent different linguistic relationships between context elements and the current token, or to look for particular kinds of patterns in the context" (SLP3 ch. 7, §7.1.1). Back to the two sentences at the start: "tired" or "soft" comes after "it", so a left-to-right model has to keep both readings. One head cannot: it gives one weighted average. In a real model the heads are not separate models. The query, key and value tables are cut into H column blocks, each head uses its own block, and the outputs are glued back together and mixed by one more table, W_O (lecture 4). The cut is a reshape, so 8 heads of 64 numbers cost about the same as one head of 512. Vaswani et al., section 3.2.2: h = 8 heads, d_k = 64. "The layers after" means later blocks of the stack, next week's word. Script: figures/03_attention_by_hand.py.
 
 ---
 
@@ -598,7 +699,7 @@ Note: Command: `cd code && python tests.py`. The causality check changes only th
 <!-- .slide: class="divider" data-background-image="assets/luyken.jpg" data-background-size="cover" data-background-position="center" -->
 
 <div class="band">
-<p class="kicker">Part 5</p>
+<p class="kicker">Part 4</p>
 
 ## GPT-2 has been doing this all along.
 </div>
