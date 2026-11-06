@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <title>Fundamentals of LLMs</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/reset.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/reveal.css">
+  <link rel="stylesheet" href="vendor/reveal/dist/reset.css">
+  <link rel="stylesheet" href="vendor/reveal/dist/reveal.css">
   <link rel="stylesheet" id="theme-css" href="theme/llm-course.css">
   <script>document.getElementById("theme-css").href = "theme/llm-course.css?t=" + Date.now();</script>  <!-- never serve a cached theme while editing -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16/dist/katex.min.css">
@@ -19,15 +19,29 @@
       <section data-markdown data-separator="^\n---\n" data-separator-vertical="^\n\|\|\|\n" data-separator-notes="^Note:"><textarea data-template id="deck-src"></textarea></section>
     </div>
   </div>
-  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/reveal.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5/plugin/markdown/markdown.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5/plugin/highlight/highlight.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5/plugin/notes/notes.js"></script>
+  <script src="vendor/reveal/dist/reveal.js"></script>
+  <script src="vendor/reveal/plugin/markdown/markdown.js"></script>
+  <script src="vendor/reveal/plugin/highlight/highlight.js"></script>
+  <script src="vendor/reveal/plugin/notes/notes.js"></script>
   <script>
-    // ?deck=lectures/01-guessing-game.md picks the markdown file; the index page lists the decks.
+    // ?deck=lectures/01-guessing-game.md picks the markdown file; default is template.md.
     // We fetch the file ourselves so that math can be hidden from the markdown parser (which eats
     // backslashes and underscores inside $...$) and typeset afterwards with KaTeX auto-render.
     const deck = new URLSearchParams(location.search).get('deck');
+    // Opening index.html straight off the disk (file://) cannot work: the browser refuses to fetch the
+    // markdown next to it. Say so instead of showing an empty page.
+    if (location.protocol === 'file:') {
+      document.querySelector('.reveal').innerHTML = `<main class="deck-index">
+        <p class="kicker">This page has to be served, not opened from disk</p>
+        <h1>The deck did not load</h1>
+        <p class="sub">A browser refuses to read <code>lectures/*.md</code> from a <code>file://</code> path.
+        Start the little server and open the http address instead:</p>
+        <pre><code>cd ~/Projects/fundamentals-of-llms/slides
+python3 -m http.server 8765</code></pre>
+        <p class="sub">Then open <a href="http://localhost:8765/">http://localhost:8765/</a> and pick a lecture.</p>
+      </main>`;
+      throw new Error('served-only');
+    }
     if (!deck) {   // no deck chosen: show the index of decks instead of a slideshow
       document.querySelector('.reveal').remove();
       fetch('decks.json').then(r => r.json()).then(decks => {
@@ -39,7 +53,7 @@
               // optional "extra": [{label, href}] in decks.json, e.g. a guest session's own slides
               (d.extra ? `<p class="extra">${d.extra.map(x => `<a href="${x.href}">${x.label}</a>`).join(' · ')}</p>` : '') +
               `</li>`).join('') +
-          `</ol><p class="sub"><a href="https://github.com/ruggsea/fundamentals-of-llms-course">Course repository</a></p></main>`;
+          `</ol><p class="sub"><a href="?deck=template.md">Layout template</a> · <a href="STYLE.md">Style guide</a> · <a href="PLAN.md">Plan</a> · <a href="../code/README.md">Code track</a></p></main>`;
       });
       throw new Error('index page');   // stop the slideshow setup below
     }
@@ -56,7 +70,10 @@
       const nodes = []; while (walker.nextNode()) nodes.push(walker.currentNode);
       for (const n of nodes) if (/MATHPH\d+X/.test(n.nodeValue)) n.nodeValue = n.nodeValue.replace(/MATHPH(\d+)X/g, (_, i) => maths[+i]);
     }
-    fetch(deck).then(r => r.text()).then(src => {
+    // cache-buster: python's http.server sends no Cache-Control, so a browser may serve a stale deck for
+    // minutes after an edit. The theme stylesheet already does this; the markdown needs it more.
+    const bust = deck.includes('?') ? '&' : '?';
+    fetch(deck + bust + 't=' + Date.now()).then(r => r.text()).then(src => {
       document.getElementById('deck-src').textContent = protectMath(src);
       Reveal.initialize({
       width: 1600, height: 900, margin: 0.04,
@@ -90,17 +107,27 @@
       });
       return pyodideReady;
     }
-    async function runBlock(pre) {
+    async function runBlock(pre, idx) {
       const code = pre.dataset.source; const out = pre.parentElement.querySelector('pre.output');
       out.textContent = 'loading Python…'; out.classList.add('visible');
       try {
         const py = await loadPyodide_();
+        // A deck may build up state across slides (slide 21 uses `X` defined on slide 12). Pyodide is one
+        // interpreter, so we only have to make sure the blocks BEFORE this one have been executed at least
+        // once. ran = how many leading blocks the interpreter has already seen, so clicking slide 21 first
+        // replays 1..20 with their output thrown away, and clicking backwards later costs nothing.
+        if (idx > ran) {
+          py.setStdout({ batched: () => {} });
+          for (let i = ran; i < idx; i++) { try { await py.runPythonAsync(sources[i]); } catch (e) {} }
+          ran = idx;
+        }
         py.setStdout({ batched: t => { out.textContent += t + '\n'; } });
         out.textContent = '';
         await py.runPythonAsync(code);
         if (!out.textContent) out.textContent = '(no output)';
       } catch (e) { out.textContent = String(e).split('\n').slice(-3).join('\n'); }
     }
+    let ran = 0, sources = [];
     function setupRunBlocks() {
       const blocks = document.querySelectorAll('pre > code.language-python.run, pre > code[class*="run"]');
       if (blocks.length) {   // keep Python warm: load Pyodide now, not on the first click
@@ -109,13 +136,15 @@
         setTimeout(() => loadPyodide_().then(py => { py.runPython('import numpy'); badge.textContent = 'python: ready'; badge.classList.add('ready'); setTimeout(() => badge.classList.add('fade'), 4000); })
           .catch(() => { badge.textContent = 'python: failed to load'; badge.classList.add('failed'); }), 800);
       }
-      blocks.forEach(code => {
+      sources = [...blocks].map(code => code.textContent);   // document order: the replay list
+      blocks.forEach((code, idx) => {
         const pre = code.parentElement;
         pre.dataset.source = code.textContent;
         const wrap = document.createElement('div'); wrap.className = 'run-wrap';
         pre.parentNode.insertBefore(wrap, pre); wrap.appendChild(pre);
         const btn = document.createElement('button'); btn.className = 'run-btn'; btn.textContent = 'run ▸';
-        btn.addEventListener('click', e => { e.preventDefault(); e.stopPropagation(); runBlock(pre); }, true);
+        btn.title = idx ? `runs the ${idx} block${idx > 1 ? 's' : ''} before it first, silently` : 'run';
+        btn.addEventListener('click', e => { e.preventDefault(); e.stopPropagation(); runBlock(pre, idx); }, true);
         btn.addEventListener('mousedown', e => e.stopPropagation(), true);
         wrap.appendChild(btn);
         const out = document.createElement('pre'); out.className = 'output'; wrap.appendChild(out);

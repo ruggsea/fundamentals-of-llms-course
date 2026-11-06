@@ -43,7 +43,7 @@
   "promise": "A modern transformer block is a short list of ablation-tested choices (pre-norm, RMSNorm, RoPE, SwiGLU, no biases).",
   "title": "The transformer block",
   "note": "",
-  "available": false
+  "available": true
  },
  {
   "n": "05",
