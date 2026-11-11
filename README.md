@@ -26,7 +26,7 @@ Slides and reading lists will be added as we work through them.
 | 01 | 08 Oct | The guessing game. | [slides](https://ruggsea.github.io/fundamentals-of-llms-course/slides/?deck=lectures/01-guessing-game.md) |
 | 02 | 15 Oct | Tokenizers. Ruggero's hour, then Lorenz on agents. | [slides](https://ruggsea.github.io/fundamentals-of-llms-course/slides/?deck=lectures/02-tokenizers.md) · [Agentic coding slides](https://ruggsea.github.io/fundamentals-of-llms-course/agentic-coding/slides/) · [Getting started with coding agents](https://github.com/ruggsea/fundamentals-of-llms-course/blob/main/agentic-coding/getting-started.md) |
 | 03 | 29 Oct | Attention, by hand. | [slides](https://ruggsea.github.io/fundamentals-of-llms-course/slides/?deck=lectures/03-attention.md) |
-| 04 | 05 Nov | The transformer block. | after the session |
+| 04 | 05 Nov | The transformer block. | [slides](https://ruggsea.github.io/fundamentals-of-llms-course/slides/?deck=lectures/04-transformer-block.md) |
 | 05 | 12 Nov | Training. Assignment 1 released. | after the session |
 | 06 | 19 Nov | Data cleaning. | after the session |
 | 07 | 26 Nov | Data mixing. | after the session |
