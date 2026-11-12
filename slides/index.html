@@ -83,7 +83,7 @@ python3 -m http.server 8765</code></pre>
     }).then(() => {
       const root = document.querySelector('.reveal .slides');
       restoreMath(root);
-      renderMathInElement(root, { delimiters: [ { left: '$$', right: '$$', display: true }, { left: '$', right: '$', display: false } ], throwOnError: false });
+      if (window.renderMathInElement) renderMathInElement(root, { delimiters: [ { left: '$$', right: '$$', display: true }, { left: '$', right: '$', display: false } ], throwOnError: false });
       setupRunBlocks();
       setupGuessGame();
       setupTokenizerDemo();

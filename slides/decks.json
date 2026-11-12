@@ -49,10 +49,10 @@
   "n": "05",
   "date": "12 Nov",
   "file": "05-training.md",
-  "promise": "Training is one loss, one optimizer, one schedule, and a budget; 6ND tells you what you can afford. Assignment 1 out.",
+  "promise": "Training is one loss and one loop: examples, cross-entropy, an optimizer, a schedule, and a few knobs to set.",
   "title": "Training",
   "note": "Assignment 1 released.",
-  "available": false
+  "available": true
  },
  {
   "n": "A1",

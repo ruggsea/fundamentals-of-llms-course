@@ -27,7 +27,7 @@ Slides and reading lists will be added as we work through them.
 | 02 | 15 Oct | Tokenizers. Ruggero's hour, then Lorenz on agents. | [slides](https://ruggsea.github.io/fundamentals-of-llms-course/slides/?deck=lectures/02-tokenizers.md) · [Agentic coding slides](https://ruggsea.github.io/fundamentals-of-llms-course/agentic-coding/slides/) · [Getting started with coding agents](https://github.com/ruggsea/fundamentals-of-llms-course/blob/main/agentic-coding/getting-started.md) |
 | 03 | 29 Oct | Attention, by hand. | [slides](https://ruggsea.github.io/fundamentals-of-llms-course/slides/?deck=lectures/03-attention.md) |
 | 04 | 05 Nov | The transformer block. | [slides](https://ruggsea.github.io/fundamentals-of-llms-course/slides/?deck=lectures/04-transformer-block.md) |
-| 05 | 12 Nov | Training. Assignment 1 released. | after the session |
+| 05 | 12 Nov | Training. Assignment 1 released. | [slides](https://ruggsea.github.io/fundamentals-of-llms-course/slides/?deck=lectures/05-training.md) |
 | A1 | 12 Nov | Assignment 1 | [slides](https://ruggsea.github.io/fundamentals-of-llms-course/slides/?deck=lectures/assignment1.md) |
 | 06 | 19 Nov | Data cleaning. | after the session |
 | 07 | 26 Nov | Data mixing. | after the session |
@@ -81,6 +81,17 @@ The reading material from the slides, per lecture.
 - [Transformer Explainer](https://poloclub.github.io/transformer-explainer/). GPT-2 running in the browser; type a prompt and look at its attention.
 - Callum McDougall, [Induction heads, illustrated](https://www.lesswrong.com/posts/TvrfY4c9eaGLeyDkE/induction-heads-illustrated), 2023. Two heads working together to copy text, step by step in diagrams.
 - Adam Casson, [Transformer FLOPs](https://www.adamcasson.com/posts/transformer-flops). Where the compute of a transformer goes, and when attention's share grows.
+
+**05 · Training** (12 Nov)
+
+- Hugging Face LLM course, [A full training loop](https://huggingface.co/learn/llm-course/chapter3/4). The same loop, written for fine-tuning.
+- Hugging Face LLM course, [Training a causal language model from scratch](https://huggingface.co/learn/llm-course/chapter7/6).
+- Andrej Karpathy, [Let's build GPT: from scratch, in code, spelled out](https://www.youtube.com/watch?v=kCc8FmEb1nY). The second half is this lecture.
+- Stanford CS336, [lecture 2](https://github.com/stanford-cs336/lectures/blob/main/lecture_02.py), for where 6ND comes from.
+- Hoffmann et al. 2022, [Training Compute-Optimal Large Language Models](https://arxiv.org/abs/2203.15556). The Chinchilla paper.
+- Hägele et al. 2024, [Scaling Laws and Compute-Optimal Training Beyond Fixed Training Durations](https://arxiv.org/abs/2405.18392). The WSD paper.
+- Sebastian Raschka, [Build a Large Language Model From Scratch, chapter 5](https://github.com/rasbt/LLMs-from-scratch/tree/main/ch05). Pretraining on unlabeled data, as notebooks.
+- Weights & Biases, [quickstart](https://docs.wandb.ai/quickstart).
 
 Additional resources and reading material will be posted in the Discord.
 
