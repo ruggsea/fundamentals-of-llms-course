@@ -67,7 +67,7 @@ Note: DAT.C3111UB, 3 ECTS, elective in the Data Science and Mathematics masters;
 
 | | weight | date |
 |---|---|---|
-| Assignment 1: your tokenizer and a small GPT, fixed training budget | 30 % | out 5 Nov, due Wed 9 Dec |
+| Assignment 1: your tokenizer and a small GPT, fixed training budget | 30 % | out 12 Nov, due Sun 13 Dec |
 | A1 oral discussion, ten minutes | 10 % | 16–18 Dec, bookable slots |
 | Assignment 2: post-train your A1 model, build an eval, write it up | 40 % | report due Mon 15 Feb, proposed |
 | A2 oral discussion, ten minutes | 20 % | 3–5 Feb, bookable slots |
