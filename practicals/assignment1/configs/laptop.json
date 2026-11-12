@@ -1,0 +1,14 @@
+{
+  "steps": 500,
+  "batch_size": 8,
+  "lr": 0.003,
+  "warmup": 25,
+  "weight_decay": 0.1,
+  "eval_every": 100,
+  "seed": 0,
+  "context": 128,
+  "layers": 2,
+  "heads": 4,
+  "width": 128,
+  "activation": "silu"
+}

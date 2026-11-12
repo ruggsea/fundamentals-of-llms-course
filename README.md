@@ -28,6 +28,7 @@ Slides and reading lists will be added as we work through them.
 | 03 | 29 Oct | Attention, by hand. | [slides](https://ruggsea.github.io/fundamentals-of-llms-course/slides/?deck=lectures/03-attention.md) |
 | 04 | 05 Nov | The transformer block. | [slides](https://ruggsea.github.io/fundamentals-of-llms-course/slides/?deck=lectures/04-transformer-block.md) |
 | 05 | 12 Nov | Training. Assignment 1 released. | after the session |
+| A1 | 12 Nov | Assignment 1 | [slides](https://ruggsea.github.io/fundamentals-of-llms-course/slides/?deck=lectures/assignment1.md) |
 | 06 | 19 Nov | Data cleaning. | after the session |
 | 07 | 26 Nov | Data mixing. | after the session |
 | 08 | 03 Dec | Inference. Room: SR 15.05 (room change). | after the session |
@@ -95,7 +96,7 @@ Two individual assignments, each followed by a defence. Active attendance is req
 
 | Component | Weight | Date |
 |---|---|---|
-| Assignment 1 | 30% | Wednesday 9 December 2026, 23:59 |
+| Assignment 1 | 30% | Sunday 13 December 2026, 23:59 |
 | A1 defence | 10% | 16–18 December 2026 |
 | Assignment 2 | 40% | Monday 15 February 2027, 23:59 — proposed |
 | A2 defence | 20% | 3–5 February 2027 |
@@ -128,22 +129,49 @@ To set up a coding agent, follow [Getting started with coding agents](https://gi
 
 ### A1 · Train a small GPT
 
-Train and evaluate a small language model. Details will be added here shortly.
+Follow [Assignment 1](practicals/assignment1/assignment.md) for the implementation,
+tokenizer and data preparation, two training runs, tests and report requirements.
 
 ### A2 · Post-train and evaluate
 
 Post-train a model and compare it with the unchanged base model. Details will be added here shortly.
 
+## Assignment 1 submission
+
+Hand in a GitHub repository containing the report, code, commands, tests and bug
+demonstration. Upload both models to one public Hugging
+Face model repository and include its link, full revision ID and upload receipt
+in the GitHub repository. The supplied packaging script stores the models in
+separate `baseline/` and `variant/` directories.
+
+Follow the [submission guide](practicals/assignment1/submission.md) to package,
+upload and check the models, then assemble the GitHub submission.
+
+Email the GitHub URL to **lorenz.prattes@uni-graz.at** and
+**ruggero.lazzaroni@uni-graz.at** by **Sunday 13 December 2026, 23:59 (Graz time)**,
+with the subject **`final submission: assignment 1`**. Both instructors must be
+able to access the repository.
+
 ## Defences
 
-Each assignment has an individual defence. You should be able to explain your work and results.
+Each assignment has an individual 20-minute defence. You should be able to explain your work and results.
 
 Slots will be available for booking within the specified time windows. Booking and preparation details will follow.
 
 ## Compute
 
-You will get access to the GSC cluster for the course. Access instructions and the compute allowance will be announced here.
+The [practical setup guide](practicals/setup.md) covers local development, GSC
+access and Slurm jobs. Follow the assignment's training budget and configurations.
 
-## Reference code
+## Starter code
 
-Code and setup instructions will be added here.
+The [Assignment 1 starter](practicals/assignment1/code/) and
+[configurations](practicals/assignment1/configs/) are in `practicals/assignment1/`.
+Get a working copy:
+
+```sh
+git clone https://github.com/ruggsea/fundamentals-of-llms-course.git
+cd fundamentals-of-llms-course
+```
+
+Then follow [setup](practicals/setup.md) to create your environment and start the assignment.

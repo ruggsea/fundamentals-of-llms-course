@@ -1,0 +1,6 @@
+# Install PyTorch separately using setup.md for your machine.
+numpy
+pytest
+tokenizers==0.22.2
+huggingface_hub==1.33.0
+matplotlib

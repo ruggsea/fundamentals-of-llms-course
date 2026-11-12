@@ -55,6 +55,15 @@
   "available": false
  },
  {
+  "n": "A1",
+  "date": "12 Nov",
+  "file": "assignment1.md",
+  "promise": "Implementation, experiments, submission and interviews.",
+  "title": "Assignment 1",
+  "note": "",
+  "available": true
+ },
+ {
   "n": "06",
   "date": "19 Nov",
   "file": "06-data-cleaning.md",

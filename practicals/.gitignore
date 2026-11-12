@@ -1,0 +1,13 @@
+.venv/
+__pycache__/
+.pytest_cache/
+data/
+runs/
+logs/
+submissions/*
+!submissions/*-receipt.json
+environment.txt
+.env
+.env.*
+!.env.example
+.DS_Store
