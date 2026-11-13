@@ -24,7 +24,7 @@
   <script src="vendor/reveal/plugin/highlight/highlight.js"></script>
   <script src="vendor/reveal/plugin/notes/notes.js"></script>
   <script>
-    // ?deck=lectures/01-guessing-game.md picks the markdown file; default is template.md.
+    // ?deck=lectures/01-guessing-game.md picks the markdown file; the index page lists the decks.
     // We fetch the file ourselves so that math can be hidden from the markdown parser (which eats
     // backslashes and underscores inside $...$) and typeset afterwards with KaTeX auto-render.
     const deck = new URLSearchParams(location.search).get('deck');
@@ -53,7 +53,7 @@ python3 -m http.server 8765</code></pre>
               // optional "extra": [{label, href}] in decks.json, e.g. a guest session's own slides
               (d.extra ? `<p class="extra">${d.extra.map(x => `<a href="${x.href}">${x.label}</a>`).join(' · ')}</p>` : '') +
               `</li>`).join('') +
-          `</ol><p class="sub"><a href="?deck=template.md">Layout template</a> · <a href="STYLE.md">Style guide</a> · <a href="PLAN.md">Plan</a> · <a href="../code/README.md">Code track</a></p></main>`;
+          `</ol><p class="sub"><a href="https://github.com/ruggsea/fundamentals-of-llms-course">Course repository</a></p></main>`;
       });
       throw new Error('index page');   // stop the slideshow setup below
     }

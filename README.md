@@ -28,7 +28,7 @@ Slides and reading lists will be added as we work through them.
 | 03 | 29 Oct | Attention, by hand. | [slides](https://ruggsea.github.io/fundamentals-of-llms-course/slides/?deck=lectures/03-attention.md) |
 | 04 | 05 Nov | The transformer block. | [slides](https://ruggsea.github.io/fundamentals-of-llms-course/slides/?deck=lectures/04-transformer-block.md) |
 | 05 | 12 Nov | Training. Assignment 1 released. | [slides](https://ruggsea.github.io/fundamentals-of-llms-course/slides/?deck=lectures/05-training.md) |
-| A1 | 12 Nov | Assignment 1 | [slides](https://ruggsea.github.io/fundamentals-of-llms-course/slides/?deck=lectures/assignment1.md) |
+| A1 | 12 Nov | Assignment 1. | [slides](https://ruggsea.github.io/fundamentals-of-llms-course/slides/?deck=lectures/assignment1.md) |
 | 06 | 19 Nov | Data cleaning. | after the session |
 | 07 | 26 Nov | Data mixing. | after the session |
 | 08 | 03 Dec | Inference. Room: SR 15.05 (room change). | after the session |
@@ -142,6 +142,7 @@ To set up a coding agent, follow [Getting started with coding agents](https://gi
 
 Follow [Assignment 1](practicals/assignment1/assignment.md) for the implementation,
 tokenizer and data preparation, two training runs, tests and report requirements.
+The [Assignment 1 slides](https://ruggsea.github.io/fundamentals-of-llms-course/slides/?deck=lectures/assignment1.md) give the overview.
 
 ### A2 · Post-train and evaluate
 
